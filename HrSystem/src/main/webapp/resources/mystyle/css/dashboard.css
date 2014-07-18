@@ -1,0 +1,235 @@
+/*Resource Management Dashboard CSS File*/
+
+/* HTML CSS */
+body
+{
+    background-image: url(../images/background.png);
+    background-attachment: scroll;
+    background-repeat: repeat;
+    /*background-color:#3cc6ff;*/
+    color: #FFFFFF;
+    font-family: "Calibri";
+    font-size: 1em;
+    text-shadow: 1px 1px 3px #000000;
+}
+
+li{
+	list-style-type: none;
+	/*margin-right: 8em;*/	
+	display: inline;
+}
+
+h1
+{
+}
+
+h2
+{
+}
+
+a.navLinks:link
+{
+	color: #FFFFFF;
+	font-size:1.5em ;
+}
+
+a.navLinks:visited
+{
+	color: #fff726;
+	font-size:1.3em;
+}
+
+a.navLinks:hover
+{
+    color: orange;
+    text-decoration: none;
+    font-size: 1.7em;
+}
+
+a.navLinks:active
+{
+	color: red;
+	text-decoration: none;
+	font-size: 1.7em
+}
+
+font
+{
+}
+
+
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
+    content: " \25B4\25BE"; 
+    border-collapse: collapse;
+    border: 0px 0px 0px 0px;
+}
+
+table
+{
+	/*background-color:#ededed;
+    border-width: 3.5px;
+    border-style: outset;
+    border-color: #bdbdbd #909090;*/
+    border-collapse: collapse;
+    border: 0px 0px 0px 0px;
+}
+
+tr:nth-child(even)
+{
+	text-align: center;
+    color: #000000;
+    border: 0px 0px 0px 0px;
+    font-size:1em;
+    border-collapse: collapse;
+    background-color:#808080;
+    text-shadow: none;
+    padding:0.2cm 0.2cm;
+}
+
+tr:nth-child(odd)
+{
+	text-align: center;
+    color: #000000;
+    border: 0px 0px 0px 0px;
+    font-size:1em;
+    border-collapse: collapse;
+    background-color:#ededed;
+    text-shadow: none;
+    padding:0.2cm 0.2cm;
+}
+
+th
+{
+	text-align: center;
+	font-weight: bold;
+	color: #FFFFFF;
+    background-color: orange;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-left-width: 0px;
+    border-bottom-width: 3px;
+    border-collapse: collapse;
+    border-style: ridge;
+    border-color: #000000;
+    padding:0.2cm 0.2cm;
+}
+
+td
+{
+	text-align: center;
+	border: 0px 0px 0px 0px;
+	border-collapse: collapse;
+	/*border-width: 3.5px;
+    border-style: outset;
+    border-color: #bdbdbd #909090;*/
+    padding:0.2cm 0.2cm;
+}
+
+form
+{
+	text-align: center;
+    font-family: "Calibri";
+    font-size: 1em;
+}
+
+input
+{
+	text-align: center;
+	font-family: "Calibri";
+    font-size: 1em;
+}
+
+option
+{
+	text-align: center;
+    font-family: "Calibri";
+    font-size: 1em;
+}
+
+/*CSS Classes and IDs*/
+
+.center
+{
+    text-align: center;
+}
+
+.centerContent
+{
+	align-content: space-around;
+	text-align: center;
+	margin: auto;
+	width: 60%;
+}
+
+.centerElement
+{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+
+.summaryEmp
+{
+    text-align: center;
+    margin-left:auto;
+    margin-right:auto;
+    width:70%;
+}
+
+.bgtextbox
+{
+    background-color: #d1d1d1;
+}
+
+.heading {
+	font-size: 1.3em;
+	color: white;
+	font: bold;
+	/*background-color: orange;*/
+	border: thick;
+}
+
+.floaterButEmp
+{
+	position: relative;
+	top: 0px;
+	left: 0px; /*was 430px*/
+}
+
+.floaterButAlloc
+{
+	position: relative;
+	top: 0px;
+	left: 0px; /*was 345px*/
+}
+
+.floaterButProj
+{
+	position: relative;
+	top: 0px;
+	left: 0px; /*was 260px*/
+}
+
+.floaterButQuery
+{
+	position: static;
+/* 	top: 0px; */
+/* 	left: 430px; */
+}
+
+.floatNav
+{
+	text-align: center;
+	clear: left;
+}
+
+.floatNavProj
+{
+	
+}
+
+.floatNavAlloc
+{
+	
+}

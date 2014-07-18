@@ -1,0 +1,168 @@
+/* Resource Management Dashboard Image Classes*/
+
+img.viewAlloclink:link
+{
+	content: url(../images/viewAlloc.png);
+}
+
+img.viewAlloclink:hover
+{
+	content: url(../images/viewAllocHover.png);
+}
+
+img.viewAlloclink:active
+{
+	content: url(../images/viewAllocPush.png);
+}
+
+img.viewEmplink:link
+{
+	content: url(../images/viewEmp.png);
+}
+
+img.viewEmplink:hover
+{
+	content: url(../images/viewEmpHover.png);
+}
+
+img.viewEmplink:active
+{
+	content: url(../images/viewEmpPush.png);
+}
+
+img.viewProjlink:link
+{
+	content: url(../images/viewProj.png);
+}
+
+img.viewProjlink:hover
+{
+	content: url(../images/viewProjHover.png);
+}
+
+img.viewProjlink:active
+{
+	content: url(../images/viewProjPush.png);
+}
+
+img.dellink:link
+{
+	content: url(../images/delbut.png);
+	/*height: 37.5px;
+	width: 75px;*/
+}
+
+img.dellink:hover
+{
+	content: url(../images/delbutHover.png);
+}
+
+img.dellink:active
+{
+	content: url(../images/delbutPush.png);
+}
+
+img.editlink:link
+{
+	content: url(../images/editbut.png);
+}
+
+img.editlink:hover
+{
+	content: url(../images/editbutHover.png);
+}
+
+img.editlink:active
+{
+	content: url(../images/editbutPush.png);
+}
+
+img.addEmplink:link
+{
+	content: url(../images/addnewEmp.png);
+}
+
+img.addEmplink:hover
+{
+	content: url(../images/addnewEmpHover.png);
+}
+
+img.addEmplink:active
+{
+	content: url(../images/addnewEmpPush.png);
+}
+
+img.addProjlink:link
+{
+	content: url(../images/addProjEmp.png);
+}
+
+img.addProjlink:hover
+{
+	content: url(../images/addnewProjHover.png);
+}
+
+img.addProjlink:active
+{
+	content: url(../images/addnewProjPush.png);
+}
+
+img.addAlloclink:link
+{
+	content: url(../images/addnewAlloc.png);
+}
+
+img.addAlloclink:hover
+{
+	content: url(../images/addnewAllocHover.png);
+}
+
+img.addAlloclink:active
+{
+	content: url(../images/addnewAllocPush.png);
+}
+
+img.empIcon:link
+{
+	content: url(../images/empBut.png);
+}
+
+img.empIcon:hover
+{
+	content: url(../images/empButHover.png);
+}
+
+img.empIcon:active
+{
+	content: url(../images/empButPush.png);
+}
+
+img.projIcon:link
+{
+	content: url(../images/projBut.png);
+}
+
+img.projIcon:hover
+{
+	content: url(../images/projButHover.png);
+}
+
+img.projIcon:active
+{
+	content: url(../images/projButPush.png);
+}
+
+img.allocIcon:link
+{
+	content: url(../images/allocBut.png);
+}
+
+img.allocIcon:hover
+{
+	content: url(../images/allocButHover.png);
+}
+
+img.allocIcon:active
+{
+	content: url(../images/allocButPush.png);
+}

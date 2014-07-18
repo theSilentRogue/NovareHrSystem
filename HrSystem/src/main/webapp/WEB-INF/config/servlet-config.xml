@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+
+	<mvc:annotation-driven />
+	<context:component-scan base-package="novare.com.hk"/>
+	<mvc:resources mapping="/resources/**" location="/resources/mystyle/" />
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<bean id="employeeDao" class="novare.com.hk.dao.EmployeeDaoImpl" />
+	<bean id="employeeService" class="novare.com.hk.services.EmployeeServiceImpl" />
+	<bean id="projectDao" class="novare.com.hk.dao.ProjectDaoImpl" />
+	<bean id="projectService" class="novare.com.hk.services.ProjectServiceImpl" />
+	<bean id="allocationDao" class="novare.com.hk.dao.AllocationDaoImpl"/>
+	<bean id="allocationService" class="novare.com.hk.services.AllocationServiceImpl"/>
+	<bean id="projectDateViewDao" class="novare.com.hk.dao.ProjectDateViewDaoImpl"/>
+	<bean id="projectDateViewService" class="novare.com.hk.services.ProjectDateViewServiceImpl"/>
+	
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3307/sampletester" />
+		<property name="username" value="root" />
+		<property name="password" value="admin" />
+	</bean>
+
+</beans>

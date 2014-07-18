@@ -1,0 +1,3 @@
+/**
+ * Confirm Delete Script
+ */
