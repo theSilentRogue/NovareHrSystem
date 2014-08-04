@@ -36,4 +36,12 @@ public class AllocationServiceImpl implements AllocationService{
 	public List<Allocation> getViewAlloc() {
 		return allocationdao.getViewAlloc();
 	}
+	
+	public List<Allocation> filterAllocation(String project_name){
+		return allocationdao.filterAllocation(project_name);	
+	}
+	
+	public List<Allocation> searchAllocation(String searchquery){
+		return allocationdao.searchAllocation(searchquery);
+	}
 }

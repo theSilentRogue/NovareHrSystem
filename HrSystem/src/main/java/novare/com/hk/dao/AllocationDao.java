@@ -17,4 +17,8 @@ public interface AllocationDao {
 	public Allocation getAllocation(String id);
 	
 	public List<Allocation> getViewAlloc();
+	
+	public List<Allocation> filterAllocation(String project_name);
+	
+	public List<Allocation> searchAllocation(String searchquery);
 }

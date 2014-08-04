@@ -95,4 +95,25 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return employeeList.get(0);
 	}
 
+	public List<Employee> searchEmployee(String search_param) {
+
+		List<Employee> employeeList = new ArrayList<Employee>();
+		
+		String sql = "select * from employee where match(first_name,last_name,department,status,position) against('"+search_param+"*' IN BOOLEAN MODE)";
+		
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		//jdbcTemplate.update(sql);
+		employeeList = jdbcTemplate.query(sql, new EmployeeRowMapper());
+		return employeeList;
+	}
+	
+	public List<Employee> filterEmployee(String filterStat){
+		List<Employee> employeeList = new ArrayList<Employee>();
+		
+		String sql = "select * from employee where status = ?";
+		
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		employeeList = jdbcTemplate.query(sql, new Object[] { filterStat }, new EmployeeRowMapper());
+		return employeeList;
+	}
 }

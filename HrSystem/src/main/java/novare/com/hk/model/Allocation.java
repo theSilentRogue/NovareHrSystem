@@ -12,12 +12,22 @@ public class Allocation {
 	private String employee_name;
 	private String project;
 	
+	private String searchquery;
+	
+	public String getSearchquery() {
+		return searchquery;
+	}
+	public void setSearchquery(String searchquery) {
+		this.searchquery = searchquery;
+	}
+	
 	public String getEmployee_name() {
 		return employee_name;
 	}
 	public void setEmployee_name(String employee_name) {
 		this.employee_name = employee_name;
 	}
+	
 	public String getProject() {
 		return project;
 	}

@@ -32,4 +32,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeedao.getEmployee(id);
 	}
 
+	public List<Employee> searchEmployee(String search_param) {
+		return employeedao.searchEmployee(search_param);
+	}
+	
+	public List<Employee> filterEmployee(String filterStat){
+		return employeedao.filterEmployee(filterStat);
+	}
 }

@@ -1,9 +1,15 @@
 package novare.com.hk.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Set;
 
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import novare.com.hk.model.Project;
 import novare.com.hk.services.ProjectService;
 
@@ -19,7 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProjectController {
 	
 	@Autowired
-	ProjectService ProjectService;
+	ProjectService projectService;
 	
 	@RequestMapping (value = "/addProject", method = RequestMethod.GET)
 	public String addProject(@ModelAttribute Project project){
@@ -30,16 +36,37 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("/viewProjectList")
-	public ModelAndView getProjectList() {
-		List<Project> ProjectList = ProjectService.getProjectList();
-		return new ModelAndView("viewProjectList", "projectList", ProjectList);
+	public ModelAndView getProjectList(@ModelAttribute Project project) {
+		List<Project> projectList = projectService.getProjectList();
+		List<String> proj_names = new ArrayList<String>();
+		List<String> names = new ArrayList<String>();
+		
+		for (Project p : projectList){
+			proj_names.add(p.getProject_name());
+		}
+		
+		Set<String> se = new HashSet<String>(proj_names);
+		proj_names.clear();
+		
+		proj_names = new ArrayList<String>(se);
+		for(Object obj : proj_names){
+			names.add(obj.toString());
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		Collections.sort(names);
+		
+		map.put("names", names);
+		map.put("projectList", projectList);
+		
+		return new ModelAndView("viewProjectList", "map", map);
 	}
 	
 	@RequestMapping("/editProject")
 	public ModelAndView editProject(@RequestParam String id, 
 			@ModelAttribute Project project) {
 		
-		project = ProjectService.getProject(id);
+		project = projectService.getProject(id);
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("project", project);
@@ -48,7 +75,7 @@ public class ProjectController {
 	
 	@RequestMapping("/updateProject")
 	public String updateProject(@ModelAttribute Project project){
-		ProjectService.updateData(project);
+		projectService.updateData(project);
 		return "redirect:/viewProjectList";
 	}
 	
@@ -56,17 +83,96 @@ public class ProjectController {
 	@RequestMapping("/deleteProject")
 	public String deleteProject(@RequestParam String id){
 		System.out.println("id = " + id);
-		ProjectService.deleteData(id);
+		projectService.deleteData(id);
 		return "redirect:/viewProjectList";
 	}
 	
 	
 	@RequestMapping("/insertProject")
 	public String insertProject(@ModelAttribute Project project) {
-		if (project != null){
-			ProjectService.insertData(project);
-			System.out.println("Inserted Project: " + project.getProject_name());
-			}
-		return "redirect:/viewProjectList";
+		try{
+			if (project != null) {
+				projectService.insertData(project);
+				System.out.println("Inserted Project: " + project.getProject_name());
+				}
+			return "redirect:/viewProjectList";
+		} catch(Exception ex){
+			System.out.println("Invalid date input. Error is: " + ex.getMessage());
+			return "redirect:/errorPage";
+		}
+	}
+	
+	@RequestMapping("/searchProject")
+	public ModelAndView searchProjcetList(@RequestParam String searchquery, @ModelAttribute Project project){
+		List<Project> projectList = projectService.searchProject(searchquery);
+		List<Project> projectListView = projectService.getProjectList();
+		List<String> proj_names = new ArrayList<String>();
+		List<String> names = new ArrayList<String>();
+		
+		for (Project p : projectListView)
+		{
+			proj_names.add(p.getProject_name());
+		}
+		
+		Set<String> uniqueNames = new HashSet<String>(proj_names);
+		proj_names.clear();
+		
+		proj_names = new ArrayList<String>(uniqueNames);
+		for(Object obj : proj_names) {
+			names.add(obj.toString());
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		Collections.sort(names);
+		
+		map.put("names", names);
+		map.put("projectList", projectList);
+		
+		return new ModelAndView("/viewProjectList", "map", map);
+	}
+	
+	@RequestMapping("/filterProject")
+	public ModelAndView filterProjectList(@RequestParam String project_name, @ModelAttribute Project project){
+		List<Project> projectList = projectService.filterProject(project_name);
+		List<Project> projectListView = projectService.getProjectList();		
+		
+		List<String> proj_names = new ArrayList<String>();
+		List<String> names = new ArrayList<String>();
+		
+		for(Project p : projectListView){
+			proj_names.add(p.getProject_name());
+		}
+		
+		Set<String> uniqueNames = new HashSet<String>(proj_names);
+		proj_names.clear();
+		
+		proj_names = new ArrayList<String>(uniqueNames);
+		for (Object obj : proj_names){
+			names.add(obj.toString());
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		Collections.sort(names);
+		
+		map.put("names", names);
+		map.put("projectList", projectList);
+		
+		return new ModelAndView("viewProjectList", "map", map);
+	}
+	
+	@RequestMapping(value = "/reportPDFProj", method = RequestMethod.GET)
+	public ModelAndView jasperDownloadPdf(ModelAndView mv){
+		System.out.println("------------------Downloading PDF------------------");
+		
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		List<Project> projectList = projectService.getProjectList();
+		
+		JRDataSource jrDataSource = new JRBeanCollectionDataSource(projectList,false);
+		
+		parameterMap.put("dataSource", jrDataSource);
+		
+		mv = new ModelAndView("pdfReportProj", parameterMap);
+		
+		return mv;
 	}
 }

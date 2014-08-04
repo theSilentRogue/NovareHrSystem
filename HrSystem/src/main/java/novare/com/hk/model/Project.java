@@ -8,7 +8,14 @@ public class Project {
 	private String project_name;
 	private String start_date;
 	private String end_date;
+	private String searchquery;
 	
+	public String getSearchquery() {
+		return searchquery;
+	}
+	public void setSearchquery(String searchquery) {
+		this.searchquery = searchquery;
+	}
 	public String getClient() {
 		return client;
 	}

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
@@ -33,5 +34,11 @@
 		<property name="username" value="root" />
 		<property name="password" value="admin" />
 	</bean>
-
+	
+	<beans:import resource="jasper-views.xml"/>
+	
+	<beans:bean class="org.springframework.web.servlet.view.XmlViewResolver">
+		<beans:property name="location" value="/WEB-INF/config/jasper-views.xml" />
+		<beans:property name="order" value="0" />
+	</beans:bean>
 </beans>

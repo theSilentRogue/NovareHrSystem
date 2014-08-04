@@ -14,4 +14,8 @@ public interface ProjectDao {
 	public void deleteData(String id);
 
 	public Project getProject(String id);
+	
+	public List<Project> searchProject(String searchquery);
+	
+	public List<Project> filterProject(String project_name);
 }

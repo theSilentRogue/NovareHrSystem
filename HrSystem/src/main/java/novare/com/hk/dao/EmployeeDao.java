@@ -16,5 +16,8 @@ public interface EmployeeDao {
 
 	public Employee getEmployee(String id);
 
+	public List<Employee> searchEmployee(String search_param);
+	
+	public List<Employee> filterEmployee(String filterEmp);
 
 }

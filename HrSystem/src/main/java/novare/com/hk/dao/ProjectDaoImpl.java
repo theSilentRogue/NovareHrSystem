@@ -41,13 +41,13 @@ public class ProjectDaoImpl implements ProjectDao {
 	
 
 	public List<Project> getProjectList() {
-		List<Project> ProjectList = new ArrayList<Project>();
+		List<Project> projectList = new ArrayList<Project>();
 
 		String sql = "select * from projects";
 
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		ProjectList = jdbcTemplate.query(sql, new ProjectRowMapper());
-		return ProjectList;
+		projectList = jdbcTemplate.query(sql, new ProjectRowMapper());
+		return projectList;
 	}
 	
 
@@ -80,10 +80,26 @@ public class ProjectDaoImpl implements ProjectDao {
 
 	
 	public Project getProject(String id) {
-		List<Project> ProjectList = new ArrayList<Project>();
+		List<Project> projectList = new ArrayList<Project>();
 		String sql = "select * from projects where id= " + id;
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		ProjectList = jdbcTemplate.query(sql, new ProjectRowMapper());
-		return ProjectList.get(0);
+		projectList = jdbcTemplate.query(sql, new ProjectRowMapper());
+		return projectList.get(0);
+	}
+	
+	public List<Project> searchProject(String searchquery){
+		List<Project> projectList = new ArrayList<Project>();
+		String sql = "SELECT * FROM projects WHERE MATCH(client, project_name) against('"+searchquery+"*' IN BOOLEAN MODE)";
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		projectList = jdbcTemplate.query(sql, new ProjectRowMapper());
+		return projectList;
+	}
+	
+	public List<Project> filterProject(String project_name){
+		List<Project> projectList = new ArrayList<Project>();
+		String sql = "SELECT * FROM projects WHERE project_name = ?";
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		projectList = jdbcTemplate.query(sql, new Object[] { project_name }, new ProjectRowMapper());
+		return projectList;
 	}
 }

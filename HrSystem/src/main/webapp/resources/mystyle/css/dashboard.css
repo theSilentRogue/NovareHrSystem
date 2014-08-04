@@ -11,6 +11,8 @@ body
     font-family: "Calibri";
     font-size: 1em;
     text-shadow: 1px 1px 3px #000000;
+    /* -webkit-text-stroke-width: 0.1px;
+   	-webkit-text-stroke-color: black; */
 }
 
 li{
@@ -114,6 +116,22 @@ th
     padding:0.2cm 0.2cm;
 }
 
+th.footer
+{
+	text-align: center;
+	font-weight: bold;
+	color: #FFFFFF;
+    background-color: orange;
+    border-top-width: 3px;
+    border-right-width: 0px;
+    border-left-width: 0px;
+    border-bottom-width: 0px;
+    border-collapse: collapse;
+    border-style: ridge;
+    border-color: #000000;
+    padding:0.2cm 0.2cm;
+}
+
 td
 {
 	text-align: center;
@@ -147,6 +165,29 @@ option
 }
 
 /*CSS Classes and IDs*/
+
+#searchBox
+{
+	/* position: relative;
+	top: -5px;
+	left: 400px; */
+	display: inline-block;
+}
+
+#filterSelect
+{
+	display: inline-block;
+}
+
+.pagingItem
+{
+	
+}
+
+.pagingItemCurrent
+{
+	
+}
 
 .center
 {
@@ -218,18 +259,27 @@ option
 /* 	left: 430px; */
 }
 
-.floatNav
+.floatNavEmp
 {
+/* 	background-position: top;
+	padding-top: 50px; */
 	text-align: center;
-	clear: left;
 }
 
 .floatNavProj
 {
-	
+	text-align: center;
 }
 
 .floatNavAlloc
 {
-	
+	text-align: center;
+}
+
+table.sortable thead {
+    cursor: pointer;
+}
+
+th.sorttable_nosort{
+    cursor: default;
 }

@@ -19,6 +19,8 @@ public class AllocViewExtractor implements ResultSetExtractor<Allocation>  {
 		allocationView.setPercent(resultSet.getInt(4));
 		allocationView.setStart_date(resultSet.getString(5));
 		allocationView.setEnd_date(resultSet.getString(6));
+		allocationView.setEmployee_name(resultSet.getString(7));
+		allocationView.setProject(resultSet.getString(8));
 		return allocationView;
 	}
 }

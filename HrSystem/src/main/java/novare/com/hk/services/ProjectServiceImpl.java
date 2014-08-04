@@ -34,4 +34,11 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectdao.getProject(id);
 	}
 
+	public List<Project> searchProject(String searchquery){
+		return projectdao.searchProject(searchquery);
+	}
+	
+	public List<Project> filterProject(String project_name){
+		return projectdao.filterProject(project_name);
+	}
 }

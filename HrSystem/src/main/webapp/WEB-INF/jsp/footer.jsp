@@ -8,15 +8,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Footer</title>
-    <link rel="stylesheet" href="<c:url value="/resources/css/dashboard.css"/>"/>
+<title>Footer</title>
+<link rel="stylesheet"
+	href="<c:url value="/resources/css/dashboard.css"/>" />
 </head>
 <body>
-<hr />
-<div class="center">
-    <em>Resource Management System</em>
-    <br />
-    <strong>2014</strong>
-    </div>
+	<hr />
+	<div class="center">
+		<em>Resource Management System</em> <br /> <strong>2014</strong>
+	</div>
 </body>
 </html>

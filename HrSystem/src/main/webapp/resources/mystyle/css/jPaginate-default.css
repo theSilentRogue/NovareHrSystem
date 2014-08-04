@@ -1,0 +1,86 @@
+@CHARSET "ISO-8859-1";
+
+/* Text links (<a>) */
+.jPaginate-link-text
+{
+	display:inline-block;
+	background-color: #000;
+	height: 1.8em;
+	width: 1.8em;
+	line-height: 1.8;
+	color: #fff;
+	text-decoration: none;
+}
+
+/* Active links */
+.jPaginate-link-text:hover, .jPaginate-link-text.jPaginate-link-text-active
+{
+	background-color: #c00;
+	color: #fff;
+	text-decoration: underline;
+}
+
+/* Selected options */
+.jPaginate-link-option-selected
+{
+	color: #04469f;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+/* All inputs in the rows of links */
+.jPaginate-links-row input
+{
+	text-align: center;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+/* Input box */
+.jPaginate-link-input
+{
+	width: 40px;
+	font-weight: bold;
+	padding: 0px;
+	border: 1px solid #000;
+	border-radius: 5px;
+}
+
+/* Buttons */
+.jPaginate-link-button-first, .jPaginate-link-button-last, .jPaginate-link-button-next, .jPaginate-link-button-previous
+{
+	background-color: #000;
+	color: #fff;
+	font-weight: bold;
+	border-color: #000;
+	outline: none;
+}
+
+.jPaginate-link-button-first:hover, .jPaginate-link-button-last:hover, .jPaginate-link-button-next:hover, .jPaginate-link-button-previous:hover
+{
+	background-color: #c00;
+	color: #fff;
+	font-weight: bold;
+	border-color: #c00;
+	outline: none;
+}
+
+/* .jPaginate-link-button-first
+{
+	
+}
+
+.jPaginate-link-button-last
+{
+	
+}
+
+.jPaginate-link-button-next
+{
+	
+}
+
+.jPaginate-link-button-previous
+{
+	
+} */

@@ -11,6 +11,21 @@ public class Employee {
 	private String date_resigned;
 	private String position;
 	private double cost;
+	private String searchquery;
+	private String filterStat;
+	
+	public String getFilterStat() {
+		return filterStat;
+	}
+	public void setFilterStat(String filterStat) {
+		this.filterStat = filterStat;
+	}
+	public String getSearchquery() {
+		return searchquery;
+	}
+	public void setSearchquery(String searchquery) {
+		this.searchquery = searchquery;
+	}
 	public double getCost() {
 		return cost;
 	}
@@ -66,5 +81,5 @@ public class Employee {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
 }
