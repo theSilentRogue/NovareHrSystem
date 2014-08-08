@@ -7,9 +7,31 @@
 <title></title>
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/dashboard.css"/>" />
+	<link rel="stylesheet" href="<c:url value="/resources/css/RowTabs.css"/>"/>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> -->
+	<script>
+	$(document).ready(function() {
+		//Below is the click function which you need AJAX to work properly
+		/* $('nav ul.tabrow > li').click(function(e) {
+			$("nav ul.tabrow > li").removeClass("selected");
+			$(this).addClass("selected");
+			//e.preventDefault();
+		}); */
+		
+		//For Navigational Link without using AJAX
+		$('.tabrow a').filter(function(){return this.href==location.href}).parent().addClass('selected').siblings().removeClass('selected');
+	});
+	</script>
 </head>
 <body>
-	<nav>
+<nav>
+	<ul class="tabrow">
+		<li> <!-- class="selected" --><a href="viewEmployeeList" class="navLinks">Employees</a></li>
+		<li><a href="viewProjectList" class="navLinks">Projects</a></li>
+		<li><a href="viewAllocationList" class="navLinks">Allocation</a></li>
+	</ul>
+</nav>
+	<%-- <nav>
 		<div class="floatNavEmp">
 			<a href="viewEmployeeList" class="navLinks"><img alt="Employees"
 				width="70" height="70"
@@ -29,8 +51,8 @@
 		</div>
 		<!-- <a href="viewProjectStart" class="navLinks">Project Start Date</a>&nbsp;&nbsp; -->
 		<!-- <a href="viewProjectEnd" class="navLinks">Project End Date</a> -->
-	</nav>
-	<hr />
+	</nav> --%>
+	<!-- <hr /> -->
 	<br />
 </body>
 </html>

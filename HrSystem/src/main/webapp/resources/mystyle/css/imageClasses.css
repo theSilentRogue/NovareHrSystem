@@ -1,5 +1,22 @@
 /* Resource Management Dashboard Image Classes*/
 
+/* View Database Tables Buttons */
+
+img.genReportlink:link
+{
+	content: url(../images/genReport.png);
+}
+
+img.genReportlink:hover
+{
+	content: url(../images/genReportHover.png);
+}
+
+img.genReportlink:active
+{
+	content: url(../images/genReportPush.png);
+}
+
 img.viewAlloclink:link
 {
 	content: url(../images/viewAlloc.png);
@@ -45,51 +62,55 @@ img.viewProjlink:active
 	content: url(../images/viewProjPush.png);
 }
 
+/* Delete and Edit Buttons */
+
 img.dellink:link
 {
-	content: url(../images/delbut.png);
+	content: url(../images/delBut.png);
 	/*height: 37.5px;
 	width: 75px;*/
 }
 
 img.dellink:hover
 {
-	content: url(../images/delbutHover.png);
+	content: url(../images/delButHover.png);
 }
 
 img.dellink:active
 {
-	content: url(../images/delbutPush.png);
+	content: url(../images/delButPush.png);
 }
 
 img.editlink:link
 {
-	content: url(../images/editbut.png);
+	content: url(../images/editBut.png);
 }
 
 img.editlink:hover
 {
-	content: url(../images/editbutHover.png);
+	content: url(../images/editButHover.png);
 }
 
 img.editlink:active
 {
-	content: url(../images/editbutPush.png);
+	content: url(../images/editButPush.png);
 }
+
+/* Add Buttons */
 
 img.addEmplink:link
 {
-	content: url(../images/addnewEmp.png);
+	content: url(../images/addEmp.png);
 }
 
 img.addEmplink:hover
 {
-	content: url(../images/addnewEmpHover.png);
+	content: url(../images/addEmpHover.png);
 }
 
 img.addEmplink:active
 {
-	content: url(../images/addnewEmpPush.png);
+	content: url(../images/addEmpPush.png);
 }
 
 img.addProjlink:link
@@ -99,29 +120,32 @@ img.addProjlink:link
 
 img.addProjlink:hover
 {
-	content: url(../images/addnewProjHover.png);
+	content: url(../images/addProjHover.png);
 }
 
 img.addProjlink:active
 {
-	content: url(../images/addnewProjPush.png);
+	content: url(../images/addProjPush.png);
 }
 
 img.addAlloclink:link
 {
-	content: url(../images/addnewAlloc.png);
+	content: url(../images/addAlloc.png);
 }
 
 img.addAlloclink:hover
 {
-	content: url(../images/addnewAllocHover.png);
+	content: url(../images/addAllocHover.png);
 }
 
 img.addAlloclink:active
 {
-	content: url(../images/addnewAllocPush.png);
+	content: url(../images/addAllocPush.png);
 }
 
+/* Old Category Buttons */
+
+/* 
 img.empIcon:link
 {
 	content: url(../images/empBut.png);
@@ -165,4 +189,4 @@ img.allocIcon:hover
 img.allocIcon:active
 {
 	content: url(../images/allocButPush.png);
-}
+} */

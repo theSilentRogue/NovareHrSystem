@@ -13,7 +13,8 @@
 	href="<c:url value="/resources/css/dashboard.css"/>" />
 </head>
 <body>
-	<hr />
+	<!-- <hr /> -->
+	<br/>
 	<div class="center">
 		<em>Resource Management System</em> <br /> <strong>2014</strong>
 	</div>

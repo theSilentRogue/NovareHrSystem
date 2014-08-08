@@ -1,16 +1,33 @@
 /*Resource Management Dashboard CSS File*/
 
+html
+{
+	min-height: 100%;
+	-webkit-font-smoothing: antialiased;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+}
+
 /* HTML CSS */
 body
 {
-    background-image: url(../images/background.png);
-    background-attachment: scroll;
+	/* height: 100%; */
+	margin: 0;
+	padding: 0;
+	-webkit-font-smoothing: antialiased;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+	background-attachment: fixed;
     background-repeat: repeat;
-    /*background-color:#3cc6ff;*/
-    color: #FFFFFF;
+    /*background-image: url(../images/background.png);*/
+    background: -webkit-linear-gradient(/* #bdc3c7 */ #2980b9 10%, #ecf0f1 14%, #ecf0f1 76%);
+	background: -o-linear-gradient(/* #bdc3c7 */ #2980b9 10%, #ecf0f1 14%, #ecf0f1 76%);
+	background: -moz-linear-gradient(/* #bdc3c7 */ #2980b9 10%, #ecf0f1 14%,  #ecf0f1 76%);
+	background: linear-gradient(/* #bdc3c7 */ #2980b9 10%, #ecf0f1 14%, #ecf0f1 76%);
+    /* background-color: #ecf0f1;#8e8e8e; */
+    color: #000000;
+    
     font-family: "Calibri";
     font-size: 1em;
-    text-shadow: 1px 1px 3px #000000;
+    /*text-shadow: 1px 1px 3px #000000;*/
     /* -webkit-text-stroke-width: 0.1px;
    	-webkit-text-stroke-color: black; */
 }
@@ -19,6 +36,20 @@ li{
 	list-style-type: none;
 	/*margin-right: 8em;*/	
 	display: inline;
+}
+
+/* hr
+{
+	border: 0;
+	height: 15px;
+	background: url(../images/HorizontalRule.png) scroll center;
+	display: none;
+} */
+
+select
+{
+	height:20px;
+	overflow-y:scroll;
 }
 
 h1
@@ -31,28 +62,28 @@ h2
 
 a.navLinks:link
 {
-	color: #FFFFFF;
-	font-size:1.5em ;
+	color: #2980b9;
+	font-size:1.7em ;
 }
 
 a.navLinks:visited
 {
 	color: #fff726;
-	font-size:1.3em;
+	/* font-size:1.3em; */
 }
 
 a.navLinks:hover
 {
     color: orange;
     text-decoration: none;
-    font-size: 1.7em;
+    /* font-size: 1.7em; */
 }
 
 a.navLinks:active
 {
 	color: red;
 	text-decoration: none;
-	font-size: 1.7em
+	/* font-size: 1.7em */
 }
 
 font
@@ -72,6 +103,9 @@ table
     border-width: 3.5px;
     border-style: outset;
     border-color: #bdbdbd #909090;*/
+    margin: 0;
+    /* padding: 0; */
+    width: 100%;
     border-collapse: collapse;
     border: 0px 0px 0px 0px;
 }
@@ -83,7 +117,7 @@ tr:nth-child(even)
     border: 0px 0px 0px 0px;
     font-size:1em;
     border-collapse: collapse;
-    background-color:#808080;
+    background-color:#b9b9b9;
     text-shadow: none;
     padding:0.2cm 0.2cm;
 }
@@ -105,14 +139,14 @@ th
 	text-align: center;
 	font-weight: bold;
 	color: #FFFFFF;
-    background-color: orange;
+    background-color: #256d9d /* #213b74 */ /* #3498db */ /* #18336e */;
     border-top-width: 0px;
     border-right-width: 0px;
     border-left-width: 0px;
     border-bottom-width: 3px;
     border-collapse: collapse;
     border-style: ridge;
-    border-color: #000000;
+    border-color: #646464;
     padding:0.2cm 0.2cm;
 }
 
@@ -121,14 +155,14 @@ th.footer
 	text-align: center;
 	font-weight: bold;
 	color: #FFFFFF;
-    background-color: orange;
+    background-color: #256d9d /* #213b74 */ /* #3498db */ /* #18336e */;
     border-top-width: 3px;
     border-right-width: 0px;
     border-left-width: 0px;
     border-bottom-width: 0px;
     border-collapse: collapse;
     border-style: ridge;
-    border-color: #000000;
+    border-color: #646464;
     padding:0.2cm 0.2cm;
 }
 
@@ -145,16 +179,92 @@ td
 
 form
 {
-	text-align: center;
+	/* text-align: center; */
     font-family: "Calibri";
     font-size: 1em;
 }
 
-input
+input[type=text]
 {
 	text-align: center;
 	font-family: "Calibri";
     font-size: 1em;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ababab;
+}
+
+input[type=date]
+{
+	border-radius: 5px;
+	text-align:center;
+	font-family: "Calibri";
+	font-size:1em;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #ababab;
+}
+
+input[type=button]
+{
+	font-weight: bold;
+	/* border-color: #445f68; */
+	border-radius: 5px;
+	outline: none;
+}
+
+input:hover[type=button]
+{
+	font-weight: bold;
+	border-color: #5d5d5d;
+	border-radius: 5px;
+	outline: none;
+}
+
+input[type=submit]
+{
+	font-weight: bold;
+	color: #000000;
+	/* border-color: #445f68; */
+	border-radius: 5px;
+	outline: none;
+}
+
+input:hover[type=submit]
+{
+	font-weight: bold;
+	color: #000000;
+	border-color: #5d5d5d;
+	border-radius: 5px;
+	outline: none;
+}
+
+input[type=reset]
+{
+	font-weight: bold;
+	color: #000000;
+	/* border-color: #445f68; */
+	border-radius: 5px;
+	outline: none;
+}
+
+input:hover[type=reset]
+{
+	font-weight: bold;
+	color: #000000;
+	border-color: #5d5d5d;
+	border-radius: 5px;
+	outline: none;
+}
+
+select
+{
+	width: auto;
+	height: auto;
+	font-family: "Calibri";
+	font-size: 16px;
+	border-radius: 5px;
 }
 
 option
@@ -165,6 +275,58 @@ option
 }
 
 /*CSS Classes and IDs*/
+
+#title
+{
+	padding-top: 0.3em;
+	padding-bottom: 0px;
+	padding-right: 0px;
+	padding-left: 0.7em;
+	font-size: 2.5em;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+#bgOne
+{
+	background: -webkit-linear-gradient(left, #bdc3c7 10%, #95a5a6 90%);
+	background: -o-linear-gradient(left, #bdc3c7 10%, #95a5a6 90%);
+	background: -moz-linear-gradient(left, #bdc3c7 10%,  #95a5a6 90%);
+	background: linear-gradient(to left, #bdc3c7 10%, #95a5a6 90%);
+	/* background-color: #95a5a6; */
+	height: 30%;
+	z-index: -1000;
+}
+
+/* For dropdowns */
+
+/* .dropdown
+{
+	overflow-y: scroll;
+} */
+
+/* .selectStyle
+{
+	padding: 5px 6px;
+	width: 120px;
+	font-family: "Calibri";
+	font-size: 16px;
+}
+
+.selectStyle select
+{
+	width: auto;
+	height: 50%;
+	font-family: "Calibri";
+	font-size: 16px;
+	overflow-y: scroll;
+	border-radius: 5px;
+}
+
+.selectStyle select:focus
+{
+	
+} */
 
 #searchBox
 {
@@ -210,6 +372,11 @@ option
     width: 70%;
 }
 
+.optionElements
+{
+	padding-left: 10px;
+}
+
 .summaryEmp
 {
     text-align: center;
@@ -233,23 +400,33 @@ option
 
 .floaterButEmp
 {
+	/* padding-left: 50px; */
 	position: relative;
-	top: 0px;
-	left: 0px; /*was 430px*/
+	top: 10px;
+	left: 10px; /*was 430px*/
 }
 
 .floaterButAlloc
 {
+	/* padding-left: 50px; */
 	position: relative;
-	top: 0px;
-	left: 0px; /*was 345px*/
+	top: 10px;
+	left: 10px; /*was 345px*/
 }
 
 .floaterButProj
 {
+	/* padding-left: 50px; */
 	position: relative;
-	top: 0px;
-	left: 0px; /*was 260px*/
+	top: 10px;
+	left: 10px; /*was 260px*/
+}
+
+.floatReportBut
+{
+	position: relative;
+	top: 10px;
+	left: 10px;
 }
 
 .floaterButQuery

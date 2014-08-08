@@ -11,40 +11,36 @@
 </head>
 
 <body>
+<div id="title">Add New Project</div>
 	<%@include file="navlinks.jsp"%>
-	<div style="width: 100%; text-align: center;">
-		<div style="display: inline-block;">
-			<h2>Add New Project</h2>
+	<!-- <div style="width: 100%; text-align: center;">
+		<div style="display: inline-block;"> -->
 			<form:form method="post" action="insertProject"
 				modelAttribute="project">
-				<table>
-					<tr>
-						<td>
-							<div class="centerContent">
-								<strong>Client : *</strong>
+							<div class="optionElements">
+								<strong>Client : *</strong><strong style="padding-left:160px;">Project Name : *</strong><br/>
 								<form:input path="client" required="required" />
-								<br /> <strong>Project Name : *</strong>
-								<form:input path="project_name" required="required" />
-								<br /> <strong>Start Date : *</strong>
+								<span style="padding-left:25px;">
+									<form:input path="project_name" required="required" />
+								</span>
+								<br /><br/> <strong>Start Date : *</strong><br/>
 								<form:input path="start_date" type="date" required="required" />
-								<br /> Date Resigned :
-								<form:input path="end_date" type="date" />
+								<br /><br />
+								<strong><em>* = required fields</em></strong>
+								<br /><br />
+								<input type="submit" value="Add Project" />
+								<input type="reset" value="Reset Fields" />
 								<br />
-								<hr />
-								<input type="submit" value="Save" /><br />
-								<br /> <strong><em>* = required fields</em></strong><br />
-								<hr />
-								<a href="viewProjectList"><img alt="View Project Table"
+								<a href="viewProjectList"><img alt="View Project List" width="150" height="33" 
+								src="<c:url value="/resources/images/viewProj.png"/>" class="viewProjlink"/></a>
+								<%-- <a href="viewProjectList"><img alt="View Project Table"
 									width="150" height="37.5"
 									src="<c:url value="/resources/images/viewProj.png"/>"
-									class="viewProjlink" /></a>
+									class="viewProjlink" /></a> --%>
 							</div>
-						</td>
-					</tr>
-				</table>
 			</form:form>
-		</div>
-	</div>
+		<!-- </div>
+	</div> -->
 	<%@include file="footer.jsp"%>
 </body>
 </html>

@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="<c:url value="/resources/css/dashboard.css"/>"/>
 	<link rel="stylesheet" href="<c:url value="/resources/css/imageClasses.css"/>"/>
 	<link rel="stylesheet" href="<c:url value="/resources/css/jPaginate-default.css"/>"/>
+	<link rel="stylesheet" href="<c:url value="/resources/css/RowTabs.css"/>"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script src="<c:url value="/resources/scripts/sorttable.js"/>"></script>
 	<script src="<c:url value="/resources/scripts/confirmDel.js"/>"></script>
@@ -49,15 +50,18 @@
 	
 </head>
 <body>
-	<%@include file = "WEB-INF/jsp/navlinks.jsp" %>
+	<!-- <div id="bgOne"> -->
+	<div id="title">Test Page</div>
+		<%@include file = "WEB-INF/jsp/navlinks.jsp" %>
+	<!-- </div> -->
 	<div align="center">
 	<!-- center -->
-		<h1>Test Page</h1>
+		<!-- <h1>Test Page</h1> -->
 		<div>
 		This is where experiments come and go.
 		</div>
 		<hr>
-		<h1>Pagination Test - Links </h1>	
+		<!-- <h1>Pagination Test - Links </h1>	
 		<table class="sortable" id="linkPages">
 		<thead>
 				<tr>
@@ -399,7 +403,7 @@
 				</tr>
 			</tbody>
 
-		</table>
+		</table> -->
 	<!-- center -->
 	</div>
 	<%@include file = "WEB-INF/jsp/footer.jsp" %>

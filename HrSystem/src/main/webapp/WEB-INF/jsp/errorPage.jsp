@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Error Adding Employee</title>
+<title>System Error</title>
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/dashboard.css"/>" />
 <link rel="stylesheet"
@@ -14,8 +14,8 @@
 </head>
 <body>
 	<div class="centerContent">
-		<h1 style="color: red; font-style: italic;">Error!</h1>
-		<h2>Please check correct input values.</h2>
+		<h1 style="color: #fff; font-style: italic;">Error!</h1>
+		<h2>Something went wrong... Please go back to the main page.</h2>
 		<br /> <a href="viewEmployeeList">Go Back</a>
 	</div>
 
