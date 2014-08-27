@@ -76,8 +76,8 @@
 					<!-- <th>Project Id</th> -->
 					<th>Client</th>
 					<th>Project Name</th>
-					<th>Start Date</th>
-					<th>End Date</th>
+					<th>Start Date<br/>(YYYY-MM-DD)</th>
+					<th>End Date<br/>(YYYY-MM-DD)</th>
 					<th class="sorttable_nosort">Controls</th>
 					<!-- <th class="sorttable_nosort"></th> -->
 				</tr>

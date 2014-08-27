@@ -142,7 +142,14 @@
 							    '<input class="jPaginate-link-button-previous" type="button" value="&lt; Prev">'+
 							    '<strong>Page: </strong>'+'<select class="jPaginate-link-select">'+linksHTML+'</select>' +
 							    '<input class="jPaginate-link-button-next" type="button" value="Next &gt;">'+
-							    '<input class="jPaginate-link-button-last" type="button" value="Last &raquo;">');
+							    '<input class="jPaginate-link-button-last" type="button" value="Last &raquo;">'+
+							    ' <strong>Show:</strong> '+
+							    '<select class="pageSize">'+
+							    '<option selected="selected" value="5">5</option>'+
+							    '<option value="10">10</option>'+
+							    '<option value="15">15</option>'+
+							    '<option value="20">20</option></select>'+
+							    ' <strong>rows</strong>');
 					
 								var select=th.find('.jPaginate-link-select');
 							    select.change(function()
@@ -158,21 +165,38 @@
 							    		th.find('.jPaginate-link-button-first').click(function()
 							    	    {
 							    	        select.val(1).change();
+							    	        alert("First page of the table.")
 							    	    });
 
 							    	    th.find('.jPaginate-link-button-last').click(function()
 							    	    {
 							    	        select.val(nbr_pages).change();
+							    	        alert("Last page of table.");
 							    	    });
 
 							    	    th.find('.jPaginate-link-button-previous').click(function()
 							    	    {
+							    	    	if (select.val() != 1)
+							    	    		{
 							    	        select.val(parseInt(select.val(),10)-1).change();
+							    	    		}
+							    	    	else
+							    	    		alert("This is the first page! Can't go back.")
 							    	    });
 
 							    	    th.find('.jPaginate-link-button-next').click(function()
 							    	    {
-							    	        select.val(parseInt(select.val(),10)+1).change();
+							    	    	if (select.val() < nbr_pages)
+							    	    		{
+							    	    			select.val(parseInt(select.val(),10)+1).change();
+							    	    		}
+							    	    	else
+							    	    		alert("End of table reached!");
+							    	    });
+							    	    
+							    	    th.find('.pageSize').change(function()
+							    	    {
+							    	    	//Put change page logic here...TO-DO
 							    	    });
 						break;
 					

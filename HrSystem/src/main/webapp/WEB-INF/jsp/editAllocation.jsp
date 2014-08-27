@@ -22,14 +22,21 @@
 				modelAttribute="allocation">
 							<div class="optionElements">
 								<strong>Employee Name :</strong><strong style="padding-left:100px;">Project Name :</strong><strong style="padding-left:160px;">Percent :</strong><br />
-								<form:input path="employee_name"
-									value="${map.allocation.employee_name}" required="required" readonly="true"/>
-								<spring:bind path="project">
+								<form:hidden path="employee.id" value="${map.empID}"/>
+								<form:input path="employee.id" value="${map.allocation.employee_name}" required="required"/>
+								<%-- <form:input path="employee_name"
+									value="${map.allocation.employee_name}" required="required" readonly="true"/> --%>
+									<span style="padding-left:25px;">
+									<form:select path="project.id" required="required">
+										<form:options items="${projects}" var="project" itemValue="value" itemLabel="key"/>
+								</form:select>
+								</span>
+								<%-- <spring:bind path="project">
 								<span style="padding-left:25px;">
 									<select name="project">
 										<c:forEach items='${map.names}' var='name'>
 											<c:choose>
-												<c:when test="${name eq map.allocation.project}">
+												<c:when test="${name eq map.allocation.project_name}">
 													<option value="${name}" selected>${name}</option>
 												</c:when>
 												<c:otherwise>
@@ -39,7 +46,7 @@
 										</c:forEach>
 									</select>
 									</span>
-								</spring:bind>
+								</spring:bind> --%>
 								<%-- <form:input path="project_id"
 									value="${map.allocation.project_id}" required="required" /> --%>
 									<span style="padding-left:60px;">

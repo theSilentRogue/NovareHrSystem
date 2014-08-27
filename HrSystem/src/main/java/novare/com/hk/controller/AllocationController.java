@@ -1,8 +1,11 @@
 package novare.com.hk.controller;
 
 //import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -19,7 +22,11 @@ import novare.com.hk.services.EmployeeService;
 import novare.com.hk.services.ProjectService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,42 +45,66 @@ public class AllocationController {
 	ProjectService projectService;
 	
 	@RequestMapping (value = "/addAllocation", method = RequestMethod.GET)
-	public ModelAndView addAllocation(@ModelAttribute Allocation allocation){
-
-		List<Employee> employeeList = employeeService.getEmployeeList();
-		List<Project> projectList = projectService.getProjectList();
-		
-		List<String> emp_names = new ArrayList<String>();
-		List<String> proj_names = new ArrayList<String>();
-		
-		for (Employee e : employeeList)
-		{
-			emp_names.add(e.getFname()+ " " + e.getLname());
-		}
-		
-		for (Project p : projectList)
-		{
-			proj_names.add(p.getProject_name());
-		}
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		Collections.sort(emp_names);
-		Collections.sort(proj_names);
-		
-		map.put("employeeList", employeeList);
-		map.put("emp_names", emp_names);
-		map.put("proj_names", proj_names);
+	public String addAllocation(@ModelAttribute Allocation allocation,
+			Model model){
 		
 		System.out.println("Viewing pre-adding page. . .");
 		
-		return new ModelAndView("addAllocation", "map", map);  
+		/**************EMPLOYEES**************/
+		Set<Map.Entry<String, Integer>> employees;
+		List<Employee> employeesList = employeeService.getEmployeeList();
+		final Map<String, Integer> employeesMap = new HashMap<String, Integer>();
+		if (employeesList != null && !employeesList.isEmpty()){
+			for(Employee eachEmployee : employeesList){
+				System.out.println("This EMP: " + eachEmployee.getFname() + " " + 
+						eachEmployee.getLname() + "\n");
+				if (eachEmployee != null){
+					employeesMap.put(eachEmployee.getFname() + " "
+							+ eachEmployee.getLname(), eachEmployee.getId());
+				}
+			}
+		}
+		employees = employeesMap.entrySet();
+		model.addAttribute("employees", employees);
+		
+		/**************PROJECTS**************/
+		Set<Map.Entry<String, Integer>> projects;
+		List<Project> projectsList = projectService.getProjectList();
+		final Map<String, Integer> projectsMap = new HashMap<String, Integer>();
+		if (projectsList != null && !projectsList.isEmpty()){
+			for(Project eachProject : projectsList){
+				if(eachProject != null){
+					System.out.println("This PROJ:" + eachProject.getProject_name()
+							+ "\n");
+					projectsMap.put(eachProject.getProject_name(), eachProject.getId());
+				}
+			}
+		}
+		projects = projectsMap.entrySet();
+		model.addAttribute("projects", projects);
+		
+		return "addAllocation";
 	}
 	
 	@RequestMapping("/viewAllocationList")
 	public ModelAndView getAllocationList(@ModelAttribute Project project) {
-		List<Allocation> allocationList = allocationService.getViewAlloc();
-		List<Project> projectList = projectService.getProjectList();
 		
+		/***
+		 * setting up employee name and project name for the table JSP View of
+		 * allocations
+		 ***/
+		List<Allocation> allocationList = allocationService.getAllocationList();
+		if(allocationList != null){
+			for (Allocation a : allocationList){
+				a.setEmployee_name(a.getEmployee().getFname() + " "
+						+ a.getEmployee().getLname());
+				a.setProject_name(a.getProject().getProject_name());
+			}
+		}
+		/********************************************************************/
+		
+		/*****  for project names under filter dropdown  *****/
+		List<Project> projectList = projectService.getProjectList();
 		List<String> proj_names = new ArrayList<String>();
 		List<String> names = new ArrayList<String>();
 		
@@ -93,7 +124,7 @@ public class AllocationController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		Collections.sort(names);
-		
+		/******************************************************/
 		map.put("names", names);
 		map.put("allocationList", allocationList);
 		
@@ -102,10 +133,13 @@ public class AllocationController {
 	
 	@RequestMapping("/editAllocation")
 	public ModelAndView editAllocation(@RequestParam String id, 
-			@ModelAttribute Allocation allocation) {
+			@ModelAttribute Allocation allocation, Model model) {
 		
-		allocation = allocationService.getAllocation(id);
+		allocation = allocationService.getAllocation(Integer.parseInt(id));
+		allocation.setEmployee_name(allocation.getEmployee().getFname() + " " + allocation.getEmployee().getLname());
+		allocation.setProject_name(allocation.getProject().getProject_name());
 		
+		/**			Remove duplicate names from projects list		**/
 		List<Project> projectListView = projectService.getProjectList();
 		List<String> proj_names = new ArrayList<String>();
 		List<String> names = new ArrayList<String>();
@@ -124,10 +158,28 @@ public class AllocationController {
 		{
 			names.add(obj.toString());
 		}
+		/************************************************************/
+		
+		Set<Map.Entry<String, Integer>> projects;
+		List<Project> projectsList = projectService.getProjectList();
+		final Map<String, Integer> projectsMap = new HashMap<String, Integer>();
+		if (projectsList != null && !projectsList.isEmpty()) {
+			for (Project eachProject : projectsList) {
+				if (eachProject != null){
+					System.out.println("This proj: " 
+							+ eachProject.getProject_name() + "\n");
+					projectsMap.put(eachProject.getProject_name(), eachProject.getId());
+				}
+			}
+		}
+		projects = projectsMap.entrySet();
+		model.addAttribute("projects", projects);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 		map.put("allocation", allocation);
 		map.put("names", names);
+		map.put("empID", allocation.getEmployee().getId());
 		
 		return new ModelAndView ("editAllocation", "map", map);
 	}
@@ -152,7 +204,7 @@ public class AllocationController {
 	@RequestMapping("/deleteAllocation")
 	public String deleteAllocation(@RequestParam String id){
 		System.out.println("id = " + id);
-		allocationService.deleteData(id);
+		allocationService.deleteData(Integer.parseInt(id));
 		return "redirect:/viewAllocationList";
 	}
 	
@@ -167,7 +219,6 @@ public class AllocationController {
 		if (allocation != null)
 		{
 			allocationService.insertData(allocation);
-			System.out.println("Inserted allocation: " + "Employee_id:" +allocation.getEmployee_id() + " Project_id: " + allocation.getProject_id());
 			}
 		return "redirect:/viewAllocationList";
 		
@@ -181,6 +232,14 @@ public class AllocationController {
 	@RequestMapping("/filterAlloc")
 	public ModelAndView filterAllocationList(@RequestParam String project_name, @ModelAttribute Project project){
 		List<Allocation> allocationList = allocationService.filterAllocation(project_name);
+		if(allocationList != null){
+			for(Allocation a : allocationList) {
+				a.setEmployee_name(a.getEmployee().getFname() + " "
+						+ a.getEmployee().getLname());
+				a.setProject_name(a.getProject().getProject_name());
+			}
+		}
+		
 		List<Project> allocationListView = projectService.getProjectList();
 		List<String> proj_names = new ArrayList<String>();
 		List<String> names = new ArrayList<String>();
@@ -209,6 +268,14 @@ public class AllocationController {
 	@RequestMapping("/searchAlloc")
 	public ModelAndView searchAllocationList(@RequestParam String searchquery, @ModelAttribute Project project){
 		List<Allocation> allocationList = allocationService.searchAllocation(searchquery);
+		
+		if(allocationList != null){
+			for(Allocation a : allocationList){
+				a.setEmployee_name(a.getEmployee().getFname() + " "
+						+ a.getEmployee().getLname());
+				a.setProject_name(a.getProject().getProject_name());
+			}
+		}
 		List<Project> allocationListView = projectService.getProjectList();
 		List<String> proj_names = new ArrayList<String>();
 		List<String> names = new ArrayList<String>();
@@ -239,7 +306,7 @@ public class AllocationController {
 		System.out.println("------------------Downloading PDF------------------");
 		
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		List<Allocation> allocationList = allocationService.getViewAlloc();
+		List<Allocation> allocationList = allocationService.getAllocationList();
 		
 		JRDataSource jrDataSource = new JRBeanCollectionDataSource(allocationList,false);
 		
@@ -248,5 +315,28 @@ public class AllocationController {
 		mv = new ModelAndView("pdfReportAlloc", parameterMap);
 		
 		return mv;
+	}
+	
+	@RequestMapping(value = "/reportMonthPDFAlloc", method = RequestMethod.GET)
+	public ModelAndView jasperMonthReportPDF(@RequestParam Date date_start, @RequestParam Date date_end, @ModelAttribute Project project, ModelAndView mv){
+		System.out.println("------------------Downloading Monthly PDF------------------");
+		
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		List<Allocation> allocationList = allocationService.getMonthAllocation(date_start, date_end);
+		
+		JRDataSource jrDataSource = new JRBeanCollectionDataSource(allocationList,false);
+		
+		parameterMap.put("dataSource", jrDataSource);
+		
+		mv = new ModelAndView("pdfReportAllocMonth", parameterMap);
+		
+		return mv;
+	}
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder){
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		dateFormat.setLenient(false);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 }

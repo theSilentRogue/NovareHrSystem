@@ -1,40 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="allocation_HrSystem" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="91"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="allocationMonth" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0000000000000004"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString language="hql">
 		<![CDATA[]]>
 	</queryString>
-	<field name="id" class="java.lang.Integer"/>
-	<field name="employee" class="novare.com.hk.model.Employee">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="project" class="novare.com.hk.model.Project"/>
-	<field name="percent" class="java.lang.Double"/>
-	<field name="start_date" class="java.util.Date"/>
-	<field name="end_date" class="java.util.Date"/>
+	<field name="a.project" class="java.lang.String"/>
+	<field name="plan" class="java.lang.String"/>
+	<field name="percent" class="java.lang.String"/>
+	<field name="cost" class="java.lang.String"/>
+	<field name="start_date" class="java.lang.String"/>
+	<field name="end_date" class="java.lang.String"/>
+	<variable name="employee_name" class="java.lang.String" calculation="Count"/>
+	<variable name="e.cost" class="java.lang.String" calculation="Sum"/>
+	<variable name="a.percent" class="java.lang.String" calculation="Sum"/>
+	<variable name="project_name" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="79" splitType="Stretch">
-			<staticText>
-				<reportElement x="303" y="8" width="219" height="36"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="24"/>
-				</textElement>
-				<text><![CDATA[Allocation Report]]></text>
-			</staticText>
-			<textField pattern="h:mm:ss a">
-				<reportElement x="503" y="49" width="91" height="30"/>
+			<textField pattern="EEEEE, MMMMM dd, yyyy">
+				<reportElement x="286" y="49" width="219" height="30"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<textField pattern="EEEEE, MMMMM dd, yyyy">
-				<reportElement x="286" y="49" width="219" height="30"/>
+			<textField pattern="h:mm:ss a">
+				<reportElement x="503" y="49" width="91" height="30"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14"/>
 				</textElement>
@@ -46,6 +41,13 @@
 					<font size="14"/>
 				</textElement>
 				<text><![CDATA[As of]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="8" width="291" height="36"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Allocation Monthly Report]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -63,9 +65,9 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="21" splitType="Stretch">
+		<band height="22" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="72" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
+				<reportElement mode="Opaque" x="665" y="0" width="137" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
 				<box>
 					<pen lineColor="#000000"/>
 					<topPen lineColor="#000000"/>
@@ -76,24 +78,10 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ID]]></text>
+				<text><![CDATA[End Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="72" y="0" width="162" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
-				<box>
-					<pen lineColor="#000000"/>
-					<topPen lineColor="#000000"/>
-					<leftPen lineColor="#000000"/>
-					<bottomPen lineWidth="3.0" lineColor="#000000"/>
-					<rightPen lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Employee]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="234" y="0" width="165" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
+				<reportElement mode="Opaque" x="0" y="0" width="193" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
 				<box>
 					<pen lineColor="#000000"/>
 					<topPen lineColor="#000000"/>
@@ -107,7 +95,7 @@
 				<text><![CDATA[Project Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="399" y="0" width="137" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
+				<reportElement mode="Opaque" x="193" y="0" width="74" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
 				<box>
 					<pen lineColor="#000000"/>
 					<topPen lineColor="#000000"/>
@@ -118,7 +106,35 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Allocation Percentage]]></text>
+				<text><![CDATA[Plan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="267" y="0" width="105" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineColor="#000000"/>
+					<leftPen lineColor="#000000"/>
+					<bottomPen lineWidth="3.0" lineColor="#000000"/>
+					<rightPen lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Allocation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="372" y="0" width="164" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineColor="#000000"/>
+					<leftPen lineColor="#000000"/>
+					<bottomPen lineWidth="3.0" lineColor="#000000"/>
+					<rightPen lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Daily Cost]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="536" y="0" width="129" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
@@ -134,58 +150,16 @@
 				</textElement>
 				<text><![CDATA[Start Date]]></text>
 			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="665" y="0" width="137" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
-				<box>
-					<pen lineColor="#000000"/>
-					<topPen lineColor="#000000"/>
-					<leftPen lineColor="#000000"/>
-					<bottomPen lineWidth="3.0" lineColor="#000000"/>
-					<rightPen lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[End Date]]></text>
-			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="0" y="0" width="72" height="20" backcolor="#CCCCCC"/>
+			<textField pattern="Php ###0.00" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="372" y="0" width="164" height="20" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="72" y="0" width="162" height="20" backcolor="#CCCCCC"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{employee}.getFname() + " " + $F{employee}.getLname()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="234" y="0" width="165" height="20" backcolor="#CCCCCC"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{project}.getProject_name()]]></textFieldExpression>
-			</textField>
-			<textField pattern="###0.00" isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="399" y="0" width="137" height="20" backcolor="#CCCCCC"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{percent}]]></textFieldExpression>
-			</textField>
-			<textField pattern="yyyy/MM/dd" isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="536" y="0" width="129" height="20" backcolor="#CCCCCC"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{start_date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{e.cost}]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy/MM/dd" isBlankWhenNull="true">
 				<reportElement mode="Opaque" x="665" y="0" width="137" height="20" backcolor="#CCCCCC"/>
@@ -194,6 +168,34 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{end_date}]]></textFieldExpression>
 			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="0" y="0" width="193" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{a.project}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy/MM/dd" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="536" y="0" width="129" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{start_date}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="193" y="0" width="74" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{employee_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="267" y="0" width="105" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{a.percent}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
@@ -201,21 +203,21 @@
 	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch">
-			<textField evaluationTime="Report">
-				<reportElement x="762" y="18" width="40" height="20"/>
-				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
 			<textField>
-				<reportElement x="682" y="18" width="80" height="20"/>
+				<reportElement x="682" y="19" width="80" height="20"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="762" y="19" width="40" height="20"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch">
 			<staticText>
-				<reportElement x="259" y="12" width="295" height="20"/>
+				<reportElement x="259" y="11" width="295" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>

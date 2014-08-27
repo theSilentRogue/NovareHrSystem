@@ -11,9 +11,9 @@ public interface ProjectService {
 
 	public void updateData(Project project);
 
-	public void deleteData(String id);
+	public void deleteData(int id);
 
-	public Project getProject(String id);
+	public Project getProject(int id);
 	
 	public List<Project> searchProject(String searchquery);
 	

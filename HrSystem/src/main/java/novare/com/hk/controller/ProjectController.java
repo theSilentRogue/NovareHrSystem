@@ -1,5 +1,8 @@
 package novare.com.hk.controller;
 
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -14,7 +17,10 @@ import novare.com.hk.model.Project;
 import novare.com.hk.services.ProjectService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -66,7 +72,7 @@ public class ProjectController {
 	public ModelAndView editProject(@RequestParam String id, 
 			@ModelAttribute Project project) {
 		
-		project = projectService.getProject(id);
+		project = projectService.getProject(Integer.parseInt(id));
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("project", project);
@@ -83,7 +89,7 @@ public class ProjectController {
 	@RequestMapping("/deleteProject")
 	public String deleteProject(@RequestParam String id){
 		System.out.println("id = " + id);
-		projectService.deleteData(id);
+		projectService.deleteData(Integer.parseInt(id));
 		return "redirect:/viewProjectList";
 	}
 	
@@ -174,5 +180,12 @@ public class ProjectController {
 		mv = new ModelAndView("pdfReportProj", parameterMap);
 		
 		return mv;
+	}
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder){
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		dateFormat.setLenient(false);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 }

@@ -19,6 +19,11 @@
          	<bean	id="pdfReportProj" 
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
          	p:url="classpath:project_HrSystem.jrxml"
-         	p:reportDataKey="dataSource"/>     	
+         	p:reportDataKey="dataSource"/>
+         	
+    <bean	id="pdfReportAllocMonth" 
+			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+         	p:url="classpath:allocationMonth.jrxml"
+         	p:reportDataKey="dataSource"/>
 
 </beans>

@@ -1,6 +1,9 @@
 package novare.com.hk.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +14,10 @@ import novare.com.hk.model.Employee;
 import novare.com.hk.services.EmployeeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,7 +68,7 @@ public class EmployeeController extends MultiActionController {
 	public ModelAndView editEmployee(@RequestParam String id, 
 			@ModelAttribute Employee employee) {
 		
-		employee = employeeService.getEmployee(id);
+		employee = employeeService.getEmployee(Integer.parseInt(id));
 
 		List<String> status = new ArrayList<String>();  
 		
@@ -87,7 +93,7 @@ public class EmployeeController extends MultiActionController {
 	@RequestMapping("/deleteEmployee")
 	public String deleteEmployee(@RequestParam String id){
 		System.out.println("id = " + id);
-		employeeService.deleteData(id);
+		employeeService.deleteData(Integer.parseInt(id));
 		return "redirect:/viewEmployeeList";
 	}
 	
@@ -152,13 +158,22 @@ public class EmployeeController extends MultiActionController {
 		
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		List<Employee> employeeList = employeeService.getEmployeeList();
+		//List<Employee> filterParam = employeeService.filterEmployee(filterStat);
 		
 		JRDataSource jrDataSource = new JRBeanCollectionDataSource(employeeList,false);
 		
+		//parameterMap.put("filterParam", filterParam);
 		parameterMap.put("dataSource", jrDataSource);
 		
 		mv = new ModelAndView("pdfReportEmp", parameterMap);
 		
 		return mv;
+	}
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		dateFormat.setLenient(false);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 }

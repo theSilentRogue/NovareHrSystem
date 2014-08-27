@@ -3,40 +3,51 @@ package novare.com.hk.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import novare.com.hk.dao.EmployeeDao;
-import novare.com.hk.model.Employee;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import novare.com.hk.model.Employee;
+import novare.com.hk.repository.EmployeeRepository;
+
+@Service("employeeService")
 public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
-	EmployeeDao employeedao;
-	
+	EmployeeRepository employeeRepository;
+
+	@Transactional
 	public void insertData(Employee employee) {
-		employeedao.insertData(employee);
+		employeeRepository.save(employee);
 		
 	}
 
+	@Transactional
 	public List<Employee> getEmployeeList() {
-		return employeedao.getEmployeeList();
+		return employeeRepository.findAll();
 	}
 
+	@Transactional
 	public void updateData(Employee employee) {
-		employeedao.updateData(employee);
+		employeeRepository.save(employee);
 	}
 
-	public void deleteData(String id) {
-		employeedao.deleteData(id);
+	@Transactional
+	public void deleteData(int id) {
+		employeeRepository.delete(id);
 	}
 
-	public Employee getEmployee(String id) {
-		return employeedao.getEmployee(id);
+	@Transactional
+	public Employee getEmployee(int id) {
+		return employeeRepository.findOne(id);
 	}
 
+	@Transactional
 	public List<Employee> searchEmployee(String search_param) {
-		return employeedao.searchEmployee(search_param);
+		return employeeRepository.searchEmployee(search_param);
 	}
 	
+	@Transactional
 	public List<Employee> filterEmployee(String filterStat){
-		return employeedao.filterEmployee(filterStat);
+		return employeeRepository.filterEmployee(filterStat);
 	}
 }

@@ -94,8 +94,8 @@
 					<th>Last Name</th>
 					<th>Department</th>
 					<th>Status</th>
-					<th>Start Date</th>
-					<th>Date Resigned</th>
+					<th>Start Date<br/>(YYYY-MM-DD)</th>
+					<th>Date Resigned<br/>(YYYY-MM-DD)</th>
 					<th>Position</th>
 					<th>Cost</th>
 					<th class="sorttable_nosort">Controls</th>
@@ -116,7 +116,7 @@
 						<td>${employee.start_date}</td>
 						<td>${employee.date_resigned}</td>
 						<td>${employee.position}</td>
-						<td>Php${employee.cost}</td>
+						<td>Php ${employee.cost}</td>
 						<td><a href="editEmployee?id=${employee.id}"><img
 								alt="Edit" width="85" height="29"
 								src="<c:url value="/resources/images/editBut.png"/>"

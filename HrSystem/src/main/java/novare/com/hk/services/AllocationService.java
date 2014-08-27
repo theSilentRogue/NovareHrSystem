@@ -1,5 +1,6 @@
 package novare.com.hk.services;
 
+import java.util.Date;
 import java.util.List;
 
 import novare.com.hk.model.Allocation;
@@ -12,13 +13,15 @@ public interface AllocationService {
 
 	public void updateData(Allocation allocation);
 
-	public void deleteData(String id);
+	public void deleteData(int id);
 
-	public Allocation getAllocation(String id);
+	public Allocation getAllocation(int id);
 
 	public List<Allocation> getViewAlloc();
 	
 	public List<Allocation> filterAllocation(String project_name);
 	
 	public List<Allocation> searchAllocation(String searchquery);
+	
+	public List<Allocation> getMonthAllocation(Date date_start, Date date_end);
 }

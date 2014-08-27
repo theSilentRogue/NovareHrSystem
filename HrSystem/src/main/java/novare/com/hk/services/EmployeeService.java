@@ -12,9 +12,9 @@ public interface EmployeeService {
 
 	public void updateData(Employee employee);
 
-	public void deleteData(String id);
+	public void deleteData(int id);
 
-	public Employee getEmployee(String id);
+	public Employee getEmployee(int id);
 
 	public List<Employee> searchEmployee(String search_param);
 	

@@ -18,14 +18,14 @@
 		<property name="suffix" value=".jsp"/>
 	</bean>
 	
-	<bean id="employeeDao" class="novare.com.hk.dao.EmployeeDaoImpl" />
+<!-- 	<bean id="employeeDao" class="novare.com.hk.dao.EmployeeDaoImpl" />
 	<bean id="employeeService" class="novare.com.hk.services.EmployeeServiceImpl" />
 	<bean id="projectDao" class="novare.com.hk.dao.ProjectDaoImpl" />
 	<bean id="projectService" class="novare.com.hk.services.ProjectServiceImpl" />
 	<bean id="allocationDao" class="novare.com.hk.dao.AllocationDaoImpl"/>
 	<bean id="allocationService" class="novare.com.hk.services.AllocationServiceImpl"/>
 	<bean id="projectDateViewDao" class="novare.com.hk.dao.ProjectDateViewDaoImpl"/>
-	<bean id="projectDateViewService" class="novare.com.hk.services.ProjectDateViewServiceImpl"/>
+	<bean id="projectDateViewService" class="novare.com.hk.services.ProjectDateViewServiceImpl"/> -->
 	
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">

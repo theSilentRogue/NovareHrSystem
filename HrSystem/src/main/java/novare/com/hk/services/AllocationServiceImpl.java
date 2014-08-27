@@ -1,47 +1,63 @@
 package novare.com.hk.services;
 
+import java.util.Date;
 import java.util.List;
 
-import novare.com.hk.dao.AllocationDao;
 import novare.com.hk.model.Allocation;
+import novare.com.hk.repository.AllocationRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service("allocationService")
 public class AllocationServiceImpl implements AllocationService{
 	
 	@Autowired
-	AllocationDao allocationdao;
+	AllocationRepository allocationRepository;
 	
+	@Transactional
 	public void insertData(Allocation allocation) {
-		allocationdao.insertData(allocation);
-		
+		allocationRepository.save(allocation);
 	}
 
+	@Transactional
 	public List<Allocation> getAllocationList() {
-		return allocationdao.getAllocationList();
+		return allocationRepository.findAll();
 	}
-
+	
+	@Transactional
 	public void updateData(Allocation allocation) {
-		allocationdao.updateData(allocation);
-	}
-
-	public void deleteData(String id) {
-		allocationdao.deleteData(id);
-	}
-
-	public Allocation getAllocation(String id) {
-		return allocationdao.getAllocation(id);
+		allocationRepository.save(allocation);
 	}
 	
+	@Transactional
+	public void deleteData(int id) {
+		allocationRepository.delete(id);
+	}
+
+	@Transactional
+	public Allocation getAllocation(int id) {
+		return allocationRepository.findOne(id);
+	}
+	
+	@Transactional
 	public List<Allocation> getViewAlloc() {
-		return allocationdao.getViewAlloc();
+		return allocationRepository.findAll();
 	}
 	
+	@Transactional
 	public List<Allocation> filterAllocation(String project_name){
-		return allocationdao.filterAllocation(project_name);	
+		return allocationRepository.filterAllocation(project_name);	
 	}
 	
+	@Transactional
 	public List<Allocation> searchAllocation(String searchquery){
-		return allocationdao.searchAllocation(searchquery);
+		return allocationRepository.searchAllocation(searchquery);
+	}
+	
+	@Transactional
+	public List<Allocation> getMonthAllocation(Date date_start, Date date_end){
+		return allocationRepository.getMonthAllocation(date_start, date_end);
 	}
 }

@@ -25,7 +25,7 @@
 				{
 					'max': 5,
 					'page': 1,
-					'links':'selectButtons'
+					'links': 'selectButtons'
 				});
 			});
 		</script>
@@ -69,6 +69,13 @@
 				src="<c:url value="/resources/images/genReport.png"/>"
 				class="genReportlink" /></a>
 				</span>
+				<br/>
+			<form:form modelAttribute = "project" method = "get"
+				action="reportMonthPDFAlloc">
+				<form:input path="date_start" type="date" required="required"/>
+				<form:input path="date_end" type="date"/>
+				<input type="submit" value="Month Report" />
+			</form:form>
 		</div>
 		<br />
 		<table class="sortable" id="allocPage">
@@ -78,8 +85,8 @@
 					<th>Employee</th>
 					<th>Project Name</th>
 					<th>Percent</th>
-					<th>Start Date</th>
-					<th>End Date</th>
+					<th>Start Date<br/>(YYYY-MM-DD)</th>
+					<th>End Date<br/>(YYYY-MM-DD)</th>
 					<th class="sorttable_nosort">Controls</th>
 					<!-- <th class="sorttable_nosort"></th> -->
 				</tr>
@@ -89,7 +96,7 @@
 					<tr>
 						<%-- <td>${allocation.id}</td> --%>
 						<td>${allocation.employee_name}</td>
-						<td>${allocation.project}</td>
+						<td>${allocation.project_name}</td>
 						<td>${allocation.percent}%</td>
 						<td>${allocation.start_date}</td>
 						<td>${allocation.end_date}</td>

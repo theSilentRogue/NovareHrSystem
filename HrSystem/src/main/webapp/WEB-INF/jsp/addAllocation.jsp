@@ -24,13 +24,13 @@
 							
 								<strong>Employee : *</strong><strong style="padding-left:115px;">Project Name : *</strong> <strong style="padding-left:115px;">Percent : *</strong><br/>
 								<%-- <form:input path="employee_id" required="required" /> --%>
-									<form:select path="employee_name" required="required">
-										<form:options items="${map.emp_names}"/>
+									<form:select path="employee.id" required="required">
+										<form:options items="${employees}" var="employee" itemValue="value" itemLabel="key"/>
 									</form:select>
 									<span style="padding-left:34px;">
 								<%-- <form:input path="project_id" required="required" /> --%>
-									<form:select path="project" required="required">
-										<form:options items="${map.proj_names}"/>
+									<form:select path="project.id" required="required">
+										<form:options items="${projects}" var="project" itemValue="value" itemLabel="key"/>
 									</form:select>
 									</span>
 									<span style="padding-left: 18px;">

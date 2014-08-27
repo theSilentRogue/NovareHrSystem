@@ -68,7 +68,7 @@ a.navLinks:link
 
 a.navLinks:visited
 {
-	color: #fff726;
+	color: #4500ad; /* was #fff726 */
 	/* font-size:1.3em; */
 }
 
@@ -108,6 +108,30 @@ table
     width: 100%;
     border-collapse: collapse;
     border: 0px 0px 0px 0px;
+}
+
+table.sortable tbody tr:nth-child(even) td
+{
+	text-align: center;
+    color: #000000;
+    border: 0px 0px 0px 0px;
+    font-size:1em;
+    border-collapse: collapse;
+    background-color:#b9b9b9;
+    text-shadow: none;
+    padding:0.2cm 0.2cm;
+}
+
+table.sortable tbody tr:nth-child(odd) td
+{
+	text-align: center;
+    color: #000000;
+    border: 0px 0px 0px 0px;
+    font-size:1em;
+    border-collapse: collapse;
+    background-color:#ededed;
+    text-shadow: none;
+    padding:0.2cm 0.2cm;
 }
 
 tr:nth-child(even)
