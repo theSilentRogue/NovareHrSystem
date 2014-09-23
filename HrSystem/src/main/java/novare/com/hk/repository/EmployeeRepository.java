@@ -14,5 +14,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 	
 	@Query("SELECT e FROM Employee e WHERE status = ?1")
 	public List<Employee> filterEmployee(String filterStat);
+	
+	public List<Employee> findByFnameContainingOrLnameContaining(String search_param, String search_param1);
 
 }

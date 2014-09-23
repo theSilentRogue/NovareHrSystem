@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -22,7 +23,7 @@ public class Project {
 	@GeneratedValue
 	private int id;
 	
-	@OneToMany(mappedBy = "project")
+	@OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
 	private List<Allocation> allocations;
 	
 	private String client;
@@ -35,6 +36,34 @@ public class Project {
 	@Column(nullable = true)
 	private Date end_date;
 	
+	@Transient
+	private long plannedheadcount;
+	
+	@Transient
+	private double totalpercent;
+	
+	@Transient
+	private double dailycost;
+	
+	public long getPlannedheadcount() {
+		return plannedheadcount;
+	}
+	public void setPlannedheadcount(long plannedheadcount) {
+		this.plannedheadcount = plannedheadcount;
+	}
+	public double getTotalpercent() {
+		return totalpercent;
+	}
+	public void setTotalpercent(double totalpercent) {
+		this.totalpercent = totalpercent;
+	}
+	public double getDailycost() {
+		return dailycost;
+	}
+	public void setDailycost(double dailycost) {
+		this.dailycost = dailycost;
+	}
+
 	@Transient
 	private String searchquery;
 	
@@ -51,6 +80,7 @@ public class Project {
 	
 	@Transient
 	@Temporal(TemporalType.DATE)
+	@Column(nullable = true)
 	private Date date_end;
 	
 	public Date getDate_end() {

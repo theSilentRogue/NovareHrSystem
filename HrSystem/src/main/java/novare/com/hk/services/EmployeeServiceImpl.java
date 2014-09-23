@@ -42,8 +42,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Transactional
-	public List<Employee> searchEmployee(String search_param) {
-		return employeeRepository.searchEmployee(search_param);
+	public List<Employee> searchEmployee(String search_param, String search_param1) {
+		return employeeRepository.findByFnameContainingOrLnameContaining(search_param, search_param1);
 	}
 	
 	@Transactional

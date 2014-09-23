@@ -317,20 +317,80 @@ public class AllocationController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/reportMonthPDFAlloc", method = RequestMethod.GET)
-	public ModelAndView jasperMonthReportPDF(@RequestParam Date date_start, @RequestParam Date date_end, @ModelAttribute Project project, ModelAndView mv){
+	@RequestMapping(value = "/reportMonthPDF", method = RequestMethod.GET)
+	public ModelAndView jasperMonthReportPDF(@RequestParam Date start_date, Date end_date, ModelAndView mv){
 		System.out.println("------------------Downloading Monthly PDF------------------");
 		
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		List<Allocation> allocationList = allocationService.getMonthAllocation(date_start, date_end);
+		List<Project> projectList = projectService.getReport(start_date, end_date);
 		
-		JRDataSource jrDataSource = new JRBeanCollectionDataSource(allocationList,false);
+		for (Project p: projectList){
+			for (Allocation a: allocationService.reportMonth(start_date, end_date)){
+				if(p.getProject_name() == a.getProject().getProject_name()){
+					p.setPlannedheadcount(p.getPlannedheadcount()+1);
+					double percentage = (double) Math.round(a.getPercent())/100;
+						p.setTotalpercent(p.getTotalpercent()+percentage);
+						p.setDailycost(p.getDailycost()+a.getEmployee().getCost()*percentage);
+				}
+			}
+		}
+		
+		JRDataSource jrDataSource = new JRBeanCollectionDataSource(projectList,false);
 		
 		parameterMap.put("dataSource", jrDataSource);
 		
-		mv = new ModelAndView("pdfReportAllocMonth", parameterMap);
+		mv = new ModelAndView("pdfReportMonth", parameterMap);
 		
 		return mv;
+	}
+	
+	@RequestMapping("/datefilterAlloc")
+	public ModelAndView searchDateList(@RequestParam Date start_date, Date end_date, @ModelAttribute Project project){
+		
+		List<Project> projectList = projectService.getReport(start_date, end_date);
+		
+		/*if(allocationList != null){
+			for(Allocation a : allocationList){
+				a.setEmployee_name(a.getEmployee().getFname() + " "
+						+ a.getEmployee().getLname());
+				a.setProject_name(a.getProject().getProject_name());
+			}
+		}
+		List<Project> allocationListView = projectService.getProjectList();
+		List<String> proj_names = new ArrayList<String>();
+		List<String> names = new ArrayList<String>();
+		
+		for (Project p : allocationListView){
+			proj_names.add(p.getProject_name());
+		}*/
+		
+		for (Project p: projectList){
+			for (Allocation a: allocationService.reportMonth(start_date, end_date)){
+				if(p.getProject_name() == a.getProject().getProject_name()){
+					p.setPlannedheadcount(p.getPlannedheadcount()+1);
+					double percentage = (double) Math.round(a.getPercent())/100;
+						p.setTotalpercent(p.getTotalpercent()+percentage);
+						p.setDailycost(p.getDailycost()+a.getEmployee().getCost()*percentage);
+				}
+			}
+		}
+		
+		/*Set<String> uniqueNames = new HashSet<String>(proj_names);
+		proj_names.clear();
+		
+		proj_names = new ArrayList<String>(uniqueNames);
+		for (Object obj : proj_names){
+			names.add(obj.toString());
+		}*/
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		/*Collections.sort(names);
+		
+		map.put("names", names);*/
+		map.put("projectList", projectList);
+		/*map.put("allocationList", allocationList);*/
+		
+		return new ModelAndView("viewProjectDateQuery", "map", map);
 	}
 	
 	@InitBinder

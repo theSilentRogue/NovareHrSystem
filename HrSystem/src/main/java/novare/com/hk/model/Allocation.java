@@ -2,27 +2,31 @@ package novare.com.hk.model;
 
 import java.util.Date;
 
+//import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
+@Table(name="allocation")
 public class Allocation {
 	
 	@Id
 	@GeneratedValue
 	private int id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "employee_id")
 	private Employee employee;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "project_id")
 	private Project project;
 	
@@ -33,6 +37,12 @@ public class Allocation {
 	
 	@Temporal(TemporalType.DATE)
 	private Date end_date;
+	
+	@Transient
+	private double dailyCostMonth;
+	
+	@Transient
+	private double totalAlloc;
 	
 	@Transient
 	private String employee_name;
@@ -58,13 +68,29 @@ public class Allocation {
 	@Transient
 	@Temporal(TemporalType.DATE)
 	private Date date_end;
-	
+
 	public Date getDate_end() {
 		return date_end;
 	}
 
 	public void setDate_end(Date date_end) {
 		this.date_end = date_end;
+	}
+	
+	public double getDailyCostMonth() {
+		return dailyCostMonth;
+	}
+
+	public void setDailyCostMonth(double dailyCostMonth) {
+		this.dailyCostMonth = dailyCostMonth;
+	}
+
+	public double getTotalAlloc() {
+		return totalAlloc;
+	}
+
+	public void setTotalAlloc(double totalAlloc) {
+		this.totalAlloc = totalAlloc;
 	}
 
 	public Employee getEmployee() {

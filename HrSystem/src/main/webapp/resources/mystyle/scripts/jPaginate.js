@@ -138,6 +138,11 @@
 							linksHTML+='<option value="'+i+'"'+'class="jPaginate-link-option'+(i==parameters.page?' jPaginate-link-option-selected" selected="selected':'')+'">'+i+'</option>';
 						}
 						
+						/*for(var i=1; i<=parameters.max; i++)
+						{
+							linksPage+='<option value="'+i+'"'+'class="jPaginate-link-option'+(i==parameters.max?' jPaginate-link-option-selected" selected="selected':'')+'">'+i+'</option>';
+						}*/
+						
 						th.html('<input class="jPaginate-link-button-first" type="button" value="&laquo; First">'+
 							    '<input class="jPaginate-link-button-previous" type="button" value="&lt; Prev">'+
 							    '<strong>Page: </strong>'+'<select class="jPaginate-link-select">'+linksHTML+'</select>' +
@@ -196,7 +201,10 @@
 							    	    
 							    	    th.find('.pageSize').change(function()
 							    	    {
-							    	    	//Put change page logic here...TO-DO
+							    	    	/*var select=$(this);
+											select.find('.pageSize').removeClass('.pageSize-selected');
+											select.find('.pageSize[value='+select.val()+']').addClass('.pageSize-selected');
+											showPage(select.val());*/
 							    	    });
 						break;
 					

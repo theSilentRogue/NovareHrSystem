@@ -23,5 +23,7 @@ public interface AllocationService {
 	
 	public List<Allocation> searchAllocation(String searchquery);
 	
-	public List<Allocation> getMonthAllocation(Date date_start, Date date_end);
+	public List<Allocation> reportMonth(Date start_date, Date end_date);
+	
+	public List<Allocation> dateSearch(Date start_date, Date end_date);
 }

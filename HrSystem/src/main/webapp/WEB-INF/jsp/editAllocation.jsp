@@ -28,6 +28,7 @@
 									value="${map.allocation.employee_name}" required="required" readonly="true"/> --%>
 									<span style="padding-left:25px;">
 									<form:select path="project.id" required="required">
+										<option value="">--Select Project--</option>
 										<form:options items="${projects}" var="project" itemValue="value" itemLabel="key"/>
 								</form:select>
 								</span>

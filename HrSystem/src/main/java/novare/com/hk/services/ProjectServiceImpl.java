@@ -1,5 +1,6 @@
 package novare.com.hk.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,10 @@ public class ProjectServiceImpl implements ProjectService {
 	@Transactional
 	public List<Project> filterProject(String project_name){
 		return projectRepository.filterProject(project_name);
+	}
+	
+	@Transactional
+	public List<Project> getReport(Date start_date, Date end_date){
+		return projectRepository.generateReport(start_date, end_date);
 	}
 }

@@ -37,7 +37,7 @@
 									<select name="status">
 										<c:forEach items='${map.status}' var='status'>
 											<c:choose>
-												<c:when test="${statusName eq map.employee.status}">
+												<c:when test="${status eq map.employee.status}">
 													<option value="${status}" selected>${status}</option>
 												</c:when>
 												<c:otherwise>

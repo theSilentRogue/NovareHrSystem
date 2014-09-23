@@ -57,7 +57,12 @@ public class AllocationServiceImpl implements AllocationService{
 	}
 	
 	@Transactional
-	public List<Allocation> getMonthAllocation(Date date_start, Date date_end){
-		return allocationRepository.getMonthAllocation(date_start, date_end);
+	public List<Allocation> reportMonth(Date start_date, Date end_date){
+		return allocationRepository.reportMonth(start_date, end_date);
+	}
+	
+	@Transactional
+	public List<Allocation> dateSearch(Date start_date, Date end_date){
+		return allocationRepository.dateSearch(start_date, end_date);
 	}
 }

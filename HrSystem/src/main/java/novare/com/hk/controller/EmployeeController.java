@@ -121,7 +121,7 @@ public class EmployeeController extends MultiActionController {
 	@RequestMapping(value = "/searchEmp", method = RequestMethod.POST)
 	public ModelAndView searchEmployee(@RequestParam String searchquery, @ModelAttribute Employee employee) {
 		
-		List<Employee> employeeList = employeeService.searchEmployee(searchquery);
+		List<Employee> employeeList = employeeService.searchEmployee(searchquery, searchquery);
 		List<String> status = new ArrayList<String>();  
 		
 		status.add("Regular");  

@@ -16,7 +16,7 @@ public interface EmployeeService {
 
 	public Employee getEmployee(int id);
 
-	public List<Employee> searchEmployee(String search_param);
+	public List<Employee> searchEmployee(String search_param, String search_param1);
 	
 	public List<Employee> filterEmployee(String filterStat);
 }

@@ -16,6 +16,7 @@
 
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 	
+	<!-- JPA EntityManagerFactory bean -->
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="persistenceUnitName" value="punit"/>
 		<property name="dataSource" ref="dataSource"/>
@@ -25,6 +26,7 @@
 			</bean>
 			</property>
 	
+	<!-- JPA Property Mapping -->
 	<property name="jpaPropertyMap">
 		<map>
 			<entry key="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
@@ -34,6 +36,7 @@
 	</property>
 	</bean>
 	
+	<!-- JPA Transaction Manager -->
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory"/>
 	</bean>

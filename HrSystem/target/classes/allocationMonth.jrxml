@@ -6,16 +6,12 @@
 	<queryString language="hql">
 		<![CDATA[]]>
 	</queryString>
-	<field name="a.project" class="java.lang.String"/>
-	<field name="plan" class="java.lang.String"/>
-	<field name="percent" class="java.lang.String"/>
-	<field name="cost" class="java.lang.String"/>
-	<field name="start_date" class="java.lang.String"/>
-	<field name="end_date" class="java.lang.String"/>
-	<variable name="employee_name" class="java.lang.String" calculation="Count"/>
-	<variable name="e.cost" class="java.lang.String" calculation="Sum"/>
-	<variable name="a.percent" class="java.lang.String" calculation="Sum"/>
-	<variable name="project_name" class="java.lang.String"/>
+	<field name="project_name" class="java.lang.String"/>
+	<field name="plannedheadcount" class="java.lang.Long"/>
+	<field name="totalpercent" class="java.lang.Double"/>
+	<field name="dailycost" class="java.lang.Double"/>
+	<field name="start_date" class="java.util.Date"/>
+	<field name="end_date" class="java.util.Date"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -120,7 +116,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Allocation]]></text>
+				<text><![CDATA[Total Allocation]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="372" y="0" width="164" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
@@ -154,26 +150,12 @@
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<textField pattern="Php ###0.00" isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="372" y="0" width="164" height="20" backcolor="#CCCCCC"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{e.cost}]]></textFieldExpression>
-			</textField>
 			<textField pattern="yyyy/MM/dd" isBlankWhenNull="true">
 				<reportElement mode="Opaque" x="665" y="0" width="137" height="20" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{end_date}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="0" y="0" width="193" height="20" backcolor="#CCCCCC"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{a.project}]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy/MM/dd" isBlankWhenNull="true">
 				<reportElement mode="Opaque" x="536" y="0" width="129" height="20" backcolor="#CCCCCC"/>
@@ -187,14 +169,28 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{employee_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{plannedheadcount}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement mode="Opaque" x="267" y="0" width="105" height="20" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{a.percent}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{totalpercent}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="0" y="0" width="193" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Php ###0.00" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="372" y="0" width="164" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dailycost}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
