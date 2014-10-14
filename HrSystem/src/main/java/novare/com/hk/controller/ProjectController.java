@@ -33,6 +33,8 @@ public class ProjectController {
 	@Autowired
 	ProjectService projectService;
 	
+	List<Project> projectList;
+	
 	@RequestMapping (value = "/addProject", method = RequestMethod.GET)
 	public String addProject(@ModelAttribute Project project){
 
@@ -43,7 +45,7 @@ public class ProjectController {
 	
 	@RequestMapping("/viewProjectList")
 	public ModelAndView getProjectList(@ModelAttribute Project project) {
-		List<Project> projectList = projectService.getProjectList();
+		projectList = projectService.getProjectList();
 		List<String> proj_names = new ArrayList<String>();
 		List<String> names = new ArrayList<String>();
 		
@@ -110,7 +112,7 @@ public class ProjectController {
 	
 	@RequestMapping("/searchProject")
 	public ModelAndView searchProjcetList(@RequestParam String searchquery, @ModelAttribute Project project){
-		List<Project> projectList = projectService.searchProject(searchquery);
+		projectList = projectService.searchProject(searchquery);
 		List<Project> projectListView = projectService.getProjectList();
 		List<String> proj_names = new ArrayList<String>();
 		List<String> names = new ArrayList<String>();
@@ -139,7 +141,7 @@ public class ProjectController {
 	
 	@RequestMapping("/filterProject")
 	public ModelAndView filterProjectList(@RequestParam String project_name, @ModelAttribute Project project){
-		List<Project> projectList = projectService.filterProject(project_name);
+		projectList = projectService.filterProject(project_name);
 		List<Project> projectListView = projectService.getProjectList();		
 		
 		List<String> proj_names = new ArrayList<String>();
@@ -171,7 +173,7 @@ public class ProjectController {
 		System.out.println("------------------Downloading PDF------------------");
 		
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		List<Project> projectList = projectService.getProjectList();
+//		projectList = projectService.getProjectList();
 		
 		JRDataSource jrDataSource = new JRBeanCollectionDataSource(projectList,false);
 		

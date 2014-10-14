@@ -31,6 +31,8 @@ public class EmployeeController extends MultiActionController {
 	@Autowired
 	EmployeeService employeeService;
 	
+	List<Employee> employeeList;
+	
 	@RequestMapping (value = "/addEmployee", method = RequestMethod.GET)
  	public ModelAndView addEmployee(@ModelAttribute Employee employee){
 
@@ -49,7 +51,7 @@ public class EmployeeController extends MultiActionController {
 	
 	@RequestMapping("/viewEmployeeList")
 	public ModelAndView getEmployeeList(@ModelAttribute Employee employee){		
-		List<Employee> employeeList = employeeService.getEmployeeList();
+		employeeList = employeeService.getEmployeeList();
 		List<String> status = new ArrayList<String>();  
 		
 		status.add("Regular");  
@@ -121,7 +123,7 @@ public class EmployeeController extends MultiActionController {
 	@RequestMapping(value = "/searchEmp", method = RequestMethod.POST)
 	public ModelAndView searchEmployee(@RequestParam String searchquery, @ModelAttribute Employee employee) {
 		
-		List<Employee> employeeList = employeeService.searchEmployee(searchquery, searchquery);
+		employeeList = employeeService.searchEmployee(searchquery, searchquery);
 		List<String> status = new ArrayList<String>();  
 		
 		status.add("Regular");  
@@ -138,7 +140,7 @@ public class EmployeeController extends MultiActionController {
 	@RequestMapping("/filterEmployee")
 	public ModelAndView filterEmployee(@RequestParam String filterStat, @ModelAttribute Employee employee){
 		
-		List<Employee> employeeList = employeeService.filterEmployee(filterStat);
+		employeeList = employeeService.filterEmployee(filterStat);
 		List<String> status = new ArrayList<String>();  
 		
 		status.add("Regular");  
@@ -157,7 +159,7 @@ public class EmployeeController extends MultiActionController {
 		System.out.println("------------------Downloading PDF------------------");
 		
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		List<Employee> employeeList = employeeService.getEmployeeList();
+		
 		//List<Employee> filterParam = employeeService.filterEmployee(filterStat);
 		
 		JRDataSource jrDataSource = new JRBeanCollectionDataSource(employeeList,false);

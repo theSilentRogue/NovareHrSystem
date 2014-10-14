@@ -23,9 +23,16 @@ public class Project {
 	@GeneratedValue
 	private int id;
 	
-	@OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
 	private List<Allocation> allocations;
 	
+	public List<Allocation> getAllocations() {
+		return allocations;
+	}
+	public void setAllocations(List<Allocation> allocations) {
+		this.allocations = allocations;
+	}
+
 	private String client;
 	private String project_name;
 	

@@ -26,6 +26,7 @@
 <body>
 <nav>
 	<ul class="tabrow">
+		<li><a href="index" class="navLinks">Home</a></li>
 		<li> <!-- class="selected" --><a href="viewEmployeeList" class="navLinks">Employees</a></li>
 		<li><a href="viewProjectList" class="navLinks">Projects</a></li>
 		<li><a href="viewAllocationList" class="navLinks">Allocation</a></li>

@@ -39,6 +39,9 @@ public class Allocation {
 	private Date end_date;
 	
 	@Transient
+	private long plannedheadcount;
+	
+	@Transient
 	private double dailyCostMonth;
 	
 	@Transient
@@ -77,6 +80,14 @@ public class Allocation {
 		this.date_end = date_end;
 	}
 	
+	public long getPlannedheadcount() {
+		return plannedheadcount;
+	}
+
+	public void setPlannedheadcount(long plannedheadcount) {
+		this.plannedheadcount = plannedheadcount;
+	}
+
 	public double getDailyCostMonth() {
 		return dailyCostMonth;
 	}

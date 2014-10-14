@@ -39,7 +39,9 @@ public interface AllocationRepository extends JpaRepository<Allocation, Integer>
 	@Query("SELECT a FROM Allocation a"
 			+ " JOIN a.project AS proj"
 			+ " JOIN a.employee AS emp"
-			+ " WHERE a.start_date BETWEEN :start_date AND :end_date OR a.start_date = :start_date")
+			+ " WHERE a.start_date BETWEEN :start_date AND :end_date OR a.start_date = :start_date"
+			+ " GROUP BY a.start_date"
+			+ " ORDER BY MONTH(a.start_date)")
 	public List<Allocation> dateSearch(@Param("start_date")Date start_date,@Param("end_date")Date end_date);
 	
 	/*@Query("SELECT a.project, count(a.employee) AS plan,  "
@@ -52,7 +54,9 @@ public interface AllocationRepository extends JpaRepository<Allocation, Integer>
 	@Query("SELECT a FROM Allocation a"
 			+ " JOIN a.project AS proj"
 			+ " JOIN a.employee AS emp"
-			+ " WHERE a.start_date BETWEEN ?1 AND ?2 OR a.start_date = ?1")
-	public List<Allocation> reportMonth(/*@Param("start_date")*/Date start_date, /*@Param("end_date")*/Date end_date);
+			+ " WHERE a.start_date BETWEEN :start_date AND :end_date OR a.start_date = :start_date"
+			+ " GROUP BY a.start_date"
+			+ " ORDER BY MONTH(a.start_date)")
+	public List<Allocation> reportMonth(@Param("start_date")Date start_date, @Param("end_date")Date end_date);
 
 }

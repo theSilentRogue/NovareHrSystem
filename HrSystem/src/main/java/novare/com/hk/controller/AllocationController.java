@@ -22,9 +22,13 @@ import novare.com.hk.services.EmployeeService;
 import novare.com.hk.services.ProjectService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+/*import org.springframework.beans.factory.annotation.Qualifier;*/
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+/*import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.validation.annotation.Validated;*/
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -43,6 +47,13 @@ public class AllocationController {
 	
 	@Autowired
 	ProjectService projectService;
+	
+	List<Project> projectList;
+	List<Allocation> allocationList;
+	
+/*	@Autowired
+	@Qualifier("allocMonthValidator")
+	private Validator validator;*/
 	
 	@RequestMapping (value = "/addAllocation", method = RequestMethod.GET)
 	public String addAllocation(@ModelAttribute Allocation allocation,
@@ -87,24 +98,32 @@ public class AllocationController {
 	}
 	
 	@RequestMapping("/viewAllocationList")
-	public ModelAndView getAllocationList(@ModelAttribute Project project) {
+	public ModelAndView getAllocationList(@ModelAttribute Project project, @ModelAttribute Allocation allocation) {
 		
 		/***
 		 * setting up employee name and project name for the table JSP View of
 		 * allocations
 		 ***/
-		List<Allocation> allocationList = allocationService.getAllocationList();
-		if(allocationList != null){
+		projectList = projectService.getProjectList();
+		allocationList = allocationService.getAllocationList();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("names", arrangeDropdownProj());
+		map.put("allocationList", arrangeNames(allocationList) );
+		
+		return new ModelAndView("viewAllocationList", "map", map);
+//		List<Allocation> allocationList = allocationService.getAllocationList();
+		/*if(allocationList != null){
 			for (Allocation a : allocationList){
 				a.setEmployee_name(a.getEmployee().getFname() + " "
 						+ a.getEmployee().getLname());
 				a.setProject_name(a.getProject().getProject_name());
 			}
-		}
+		}*/
 		/********************************************************************/
 		
 		/*****  for project names under filter dropdown  *****/
-		List<Project> projectList = projectService.getProjectList();
+		/*List<Project> projectList = projectService.getProjectList();
 		List<String> proj_names = new ArrayList<String>();
 		List<String> names = new ArrayList<String>();
 		
@@ -124,11 +143,11 @@ public class AllocationController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		Collections.sort(names);
-		/******************************************************/
+		*//******************************************************//*
 		map.put("names", names);
 		map.put("allocationList", allocationList);
 		
-		return new ModelAndView("viewAllocationList", "map", map);
+		return new ModelAndView("viewAllocationList", "map", map);*/
 	}
 	
 	@RequestMapping("/editAllocation")
@@ -140,7 +159,7 @@ public class AllocationController {
 		allocation.setProject_name(allocation.getProject().getProject_name());
 		
 		/**			Remove duplicate names from projects list		**/
-		List<Project> projectListView = projectService.getProjectList();
+		/*List<Project> projectListView = projectService.getProjectList();
 		List<String> proj_names = new ArrayList<String>();
 		List<String> names = new ArrayList<String>();
 		
@@ -157,7 +176,7 @@ public class AllocationController {
 		for (Object obj : proj_names)
 		{
 			names.add(obj.toString());
-		}
+		}*/
 		/************************************************************/
 		
 		Set<Map.Entry<String, Integer>> projects;
@@ -178,7 +197,7 @@ public class AllocationController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("allocation", allocation);
-		map.put("names", names);
+		map.put("names", arrangeDropdownProj() );
 		map.put("empID", allocation.getEmployee().getId());
 		
 		return new ModelAndView ("editAllocation", "map", map);
@@ -212,26 +231,23 @@ public class AllocationController {
 	@RequestMapping("/insertAllocation")
 	public String insertAllocation(@ModelAttribute Allocation allocation) {
 		try{
-			if (allocation.getPercent() > 100 || allocation.getPercent() < 0)
-			{
+			if (allocation.getPercent() > 100 || allocation.getPercent() < 0){
 				throw new Exception("Invalid percentage");
-				}
-		if (allocation != null)
-		{
-			allocationService.insertData(allocation);
 			}
+		if (allocation != null){
+			allocationService.insertData(allocation);
+		}
 		return "redirect:/viewAllocationList";
 		
-		} catch (Exception ex)
-		{
+		} catch (Exception ex){
 			System.out.println("Invalid input. Error is: " + ex.getMessage());
 			return "redirect:/errorPage";
 		}
 	}
 	
 	@RequestMapping("/filterAlloc")
-	public ModelAndView filterAllocationList(@RequestParam String project_name, @ModelAttribute Project project){
-		List<Allocation> allocationList = allocationService.filterAllocation(project_name);
+	public ModelAndView filterAllocationList(@RequestParam String project_name, @ModelAttribute Project project, @ModelAttribute Allocation allocation){
+		/*List<Allocation> allocationList = allocationService.filterAllocation(project_name);
 		if(allocationList != null){
 			for(Allocation a : allocationList) {
 				a.setEmployee_name(a.getEmployee().getFname() + " "
@@ -254,20 +270,22 @@ public class AllocationController {
 		proj_names = new ArrayList<String>(uniqueNames);
 		for (Object obj : proj_names){
 			names.add(obj.toString());
-		}
+		}*/
+		
+		projectList = projectService.filterProject(project_name);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		Collections.sort(names);
+		/*Collections.sort(names);*/
 		
-		map.put("names", names);
-		map.put("allocationList", allocationList);
+		map.put("names", arrangeDropdownProj());
+		map.put("allocationList", arrangeNames(allocationService.filterAllocation(project_name) ));
 		
 		return new ModelAndView("viewAllocationList", "map", map);
 	}
 	
 	@RequestMapping("/searchAlloc")
-	public ModelAndView searchAllocationList(@RequestParam String searchquery, @ModelAttribute Project project){
-		List<Allocation> allocationList = allocationService.searchAllocation(searchquery);
+	public ModelAndView searchAllocationList(@RequestParam String searchquery, @ModelAttribute Project project, @ModelAttribute Allocation allocation){
+		/*List<Allocation> allocationList = allocationService.searchAllocation(searchquery);
 		
 		if(allocationList != null){
 			for(Allocation a : allocationList){
@@ -290,13 +308,13 @@ public class AllocationController {
 		proj_names = new ArrayList<String>(uniqueNames);
 		for (Object obj : proj_names){
 			names.add(obj.toString());
-		}
-		
+		}*/
+		allocationList = allocationService.searchAllocation(searchquery);
 		Map<String, Object> map = new HashMap<String, Object>();
-		Collections.sort(names);
+		/*Collections.sort(names);*/
 		
-		map.put("names", names);
-		map.put("allocationList", allocationList);
+		map.put("names", arrangeDropdownProj());
+		map.put("allocationList", arrangeNames(allocationList) );
 		
 		return new ModelAndView("viewAllocationList", "map", map);
 	}
@@ -306,7 +324,7 @@ public class AllocationController {
 		System.out.println("------------------Downloading PDF------------------");
 		
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		List<Allocation> allocationList = allocationService.getAllocationList();
+//		allocationList = allocationService.getAllocationList();
 		
 		JRDataSource jrDataSource = new JRBeanCollectionDataSource(allocationList,false);
 		
@@ -318,25 +336,44 @@ public class AllocationController {
 	}
 	
 	@RequestMapping(value = "/reportMonthPDF", method = RequestMethod.GET)
-	public ModelAndView jasperMonthReportPDF(@RequestParam Date start_date, Date end_date, ModelAndView mv){
+	public ModelAndView jasperMonthReportPDF(ModelAndView mv, @RequestParam Date start_date, @RequestParam Date end_date){
+			
 		System.out.println("------------------Downloading Monthly PDF------------------");
 		
-		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		List<Project> projectList = projectService.getReport(start_date, end_date);
+Map<String, Object> parameterMap = new HashMap<String, Object>();
 		
-		for (Project p: projectList){
-			for (Allocation a: allocationService.reportMonth(start_date, end_date)){
-				if(p.getProject_name() == a.getProject().getProject_name()){
-					p.setPlannedheadcount(p.getPlannedheadcount()+1);
-					double percentage = (double) Math.round(a.getPercent())/100;
-						p.setTotalpercent(p.getTotalpercent()+percentage);
-						p.setDailycost(p.getDailycost()+a.getEmployee().getCost()*percentage);
-				}
-			}
+		if(start_date != null || end_date != null){
+			projectList = projectService.getReport(start_date, end_date);
+					System.out.println("====\nReport \nService \nProject \n====\n");
 		}
 		
-		JRDataSource jrDataSource = new JRBeanCollectionDataSource(projectList,false);
+		for(Project p : projectList){
+			System.out.print(p.getProject_name() + ": ");
+			List<Allocation> allocationList = p.getAllocations();
+			for(Allocation a : allocationList){
+				if(end_date != null){
+					if((a.getStart_date().after(start_date) || a.getStart_date().equals(start_date)) && (a.getStart_date().before(end_date) || a.getStart_date().equals(end_date))){
+						p.setPlannedheadcount(p.getPlannedheadcount()+1);
+						double percentage = (double)a.getPercent()/100;
+						p.setTotalpercent(p.getTotalpercent()+percentage);
+						p.setDailycost(p.getDailycost()+a.getEmployee().getCost()*percentage);
+						System.out.println(a.getEmployee().getFname());
+					}//End inner if
+				}//End outer if
+				else if(start_date != null){
+					if((a.getStart_date().after(start_date) || a.getStart_date().equals(start_date))){
+						p.setPlannedheadcount(p.getPlannedheadcount()+1);
+					double percentage = (double)a.getPercent()/100;
+					p.setTotalpercent(p.getTotalpercent()+percentage);
+					p.setDailycost(p.getDailycost()+a.getEmployee().getCost()*percentage);
+					System.out.println(a.getEmployee().getFname());
+					}
+				}// End inner for
+			}//End outer for
+		}
+		/*List<Allocation> allocationList = allocationService.getAllocationList();*/
 		
+		JRDataSource jrDataSource = new JRBeanCollectionDataSource(projectList,false);
 		parameterMap.put("dataSource", jrDataSource);
 		
 		mv = new ModelAndView("pdfReportMonth", parameterMap);
@@ -348,6 +385,8 @@ public class AllocationController {
 	public ModelAndView searchDateList(@RequestParam Date start_date, Date end_date, @ModelAttribute Project project){
 		
 		List<Project> projectList = projectService.getReport(start_date, end_date);
+//		List<Project> projectList = projectService.getProjectList();
+		List<Allocation> allocList = allocationService.reportMonth(start_date, end_date);
 		
 		/*if(allocationList != null){
 			for(Allocation a : allocationList){
@@ -365,7 +404,7 @@ public class AllocationController {
 		}*/
 		
 		for (Project p: projectList){
-			for (Allocation a: allocationService.reportMonth(start_date, end_date)){
+			for (Allocation a: allocList){ /*allocationService.reportMonth(start_date, end_date)*/
 				if(p.getProject_name() == a.getProject().getProject_name()){
 					p.setPlannedheadcount(p.getPlannedheadcount()+1);
 					double percentage = (double) Math.round(a.getPercent())/100;
@@ -387,6 +426,7 @@ public class AllocationController {
 		/*Collections.sort(names);
 		
 		map.put("names", names);*/
+//		map.put("projectList", allocList);
 		map.put("projectList", projectList);
 		/*map.put("allocationList", allocationList);*/
 		
@@ -398,5 +438,36 @@ public class AllocationController {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		dateFormat.setLenient(false);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+		/*binder.setValidator(validator);*/
+	}
+	
+	private List<Allocation> arrangeNames(List<Allocation> allocationList){
+		/*setup employee name; emplyoee.fname + employee.lname to transient field and project name */
+		if(allocationList != null){
+			for(Allocation a :allocationList){
+				a.setEmployee_name(a.getEmployee().getFname() + " " + a.getEmployee().getLname());
+				a.setProject_name(a.getProject().getProject_name());
+			}
+		}
+		return allocationList;
+	}
+	
+	private List<String> arrangeDropdownProj(){
+		/* for project names under filter drop down */
+		List<Project> projectListDbox = projectService.getProjectList();
+		List<String> proj_names = new ArrayList<String>();
+		List<String> names = new ArrayList<String>();
+		for (Project p : projectListDbox){
+			proj_names.add(p.getProject_name());
+		}
+		Set<String> se = new HashSet<String>(proj_names);
+		proj_names.clear();
+		proj_names = new ArrayList<String>(se);
+		for (Object obj : proj_names){
+			names.add(obj.toString());
+		}
+		Collections.sort(names);
+		
+		return names;
 	}
 }

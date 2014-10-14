@@ -7,34 +7,26 @@
 <html>
 <head>
 <title>Project List</title>
+<%-- Load latency(long) purpose --%>
+<%-- <link rel="stylesheet"
+	href="<c:url value="/resources/css/jquery-ui.min.css"/>"/>--%>
+	<!-- <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>-->
+	<!-- <script src="/resources/scripts/jquery-ui.min.js"></script>-->
+	
+<%-- Used for better latency load times --%>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" ></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.min.css" />
+<%-- The rest of the scripts go here... --%>
+<script src="<c:url value="/resources/scripts/jPaginate.js"/>"></script>
+<script src="<c:url value="/resources/scripts/sorttable.js"/>"></script>
+<link rel="stylesheet"
+	href="<c:url value="/resources/css/jPaginate-default.css"/>" />
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/dashboard.css"/>" />
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/imageClasses.css"/>" />
-<link rel="stylesheet"
-	href="<c:url value="/resources/css/jPaginate-default.css"/>" />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="<c:url value="/resources/scripts/sorttable.js"/>"></script>
-<script src="<c:url value="/resources/scripts/jPaginate.js"/>"></script>
-<script>			
-			$(document).ready(function()
-			{
-				$('#projPage').jPaginate(
-				{
-					'max': 5,
-					'page': 1,
-					'links':'selectButtons'
-				});
-			});
-		</script>
-		<script>
-			function confirmAction()
-			{
-				var act = confirm("Do you want to delete this item?");
-				return act;
-			}
-		</script>
 </head>
 <body>
 <div id="title">Project List</div>
@@ -109,4 +101,21 @@
 		<!-- center -->
 	<%@include file="footer.jsp"%>
 </body>
+<script>			
+			$(document).ready(function()
+			{
+				$('#projPage').jPaginate(
+				{
+					'max': 10,
+					'page': 1,
+					'links':'selectButtons'
+				});
+			
+				function confirmAction()
+				{
+					var act = confirm("Do you want to delete this item?");
+					return act;
+				}
+			});
+		</script>
 </html>

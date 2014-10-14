@@ -53,6 +53,16 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Transactional
 	public List<Project> getReport(Date start_date, Date end_date){
-		return projectRepository.generateReport(start_date, end_date);
+		if(start_date != null && end_date != null)
+		{
+			return projectRepository.generateReport(start_date, end_date);	
+		}else if (start_date !=null && end_date == null)
+		{
+			return projectRepository.generateReport(start_date);
+		}
+		else
+		{
+			return projectRepository.findAll();
+		}
 	}
 }
