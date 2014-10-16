@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="f1" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.0000000000000004"/>
-	<property name="ireport.x" value="147"/>
+	<property name="ireport.zoom" value="1.1000000000000005"/>
+	<property name="ireport.x" value="233"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT
@@ -66,7 +66,17 @@ GROUP BY YEAR(allocation.start_date), MONTH(allocation.start_date),  projects.pr
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35"/>
+		<band height="35">
+			<textField>
+				<reportElement x="682" y="9" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="762" y="9" width="40" height="20"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="22">
@@ -194,9 +204,27 @@ GROUP BY YEAR(allocation.start_date), MONTH(allocation.start_date),  projects.pr
 		<band height="45"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54"/>
+		<band height="54">
+			<textField evaluationTime="Report">
+				<reportElement x="762" y="18" width="40" height="20"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="682" y="18" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
-		<band height="42"/>
+		<band height="42">
+			<staticText>
+				<reportElement x="259" y="12" width="295" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Resource Management System 2014]]></text>
+			</staticText>
+		</band>
 	</summary>
 </jasperReport>
