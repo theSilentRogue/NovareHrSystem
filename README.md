@@ -1,7 +1,7 @@
 NovareHrSystem
 ==============
 
-Updated: 10/16/2014
+Updated: 10/16/2014<br>
 Resource Management System/HrSystem
 
 The source files of the HrSystem using these technologies:
@@ -26,6 +26,7 @@ This is the last version of the files since 10/16/14 and these are for OJT requi
 
 A lot of changes have been made since 9/22/14. Including bugfixing, revision of codes, revision of user interface, enhanced search, filter and monthy reports or general report generation of the 3 tables.
 
-Aaron Duane A. Calalo
-Block 4IT02
-Novare Technologies Intern
+Aaron Duane A. Calalo<br>
+Novare Technologies Intern<br>
+Trinity University of Asia
+Block 4IT02<br>
