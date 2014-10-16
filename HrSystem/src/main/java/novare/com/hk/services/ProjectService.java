@@ -21,4 +21,8 @@ public interface ProjectService {
 	public List<Project> filterProject(String project_name);
 	
 	public List<Project> getReport(Date start_date, Date end_date);
+	
+	public List<Object[]> genReport(Date start_date, Date end_date);
+	
+	public List<Object[]> filterAlloc(String project_name);
 }

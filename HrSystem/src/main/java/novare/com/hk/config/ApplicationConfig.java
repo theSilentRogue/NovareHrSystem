@@ -1,3 +1,9 @@
+/*
+ * Part of the Spring form validator.
+ * Has errors in transaction manager and EntityManager.
+ * Testing purposes for an alternative configuration of the Spring JPA/Hibernate Repository
+ * */
+
 package novare.com.hk.config;
 
 /*import javax.persistence.EntityManagerFactory;

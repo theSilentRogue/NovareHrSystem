@@ -128,27 +128,6 @@
 							    	    });
 						
 					break;
-			    	
-					/*//jQuery UI dialog Box for Pagination
-					$("#dialog").dialog({
-						autoOpen: false,
-						modal: true,
-						resizable: false,
-						show: fade,
-						hide: fade,
-						title: "Pagination Alert",
-						width: 200,
-						buttons: {
-							"OK" : function(){
-				    				$(this).dialog("close");//Close on click
-				    			}
-				    		}
-				    	});*/
-
-					/*$("#firstBut").on("click", function(e){
-						$("#dialog-message").dialog("open");
-						e.preventDefault();
-					});*/
 					
 					//First, Last, Next and Previous buttons with a drop down menu in the middle of the next and previous buttons 
 					case "selectButtons":
@@ -163,12 +142,12 @@
 							linksPage+='<option value="'+i+'"'+'class="jPaginate-link-option'+(i==parameters.max?' jPaginate-link-option-selected" selected="selected':'')+'">'+i+'</option>';
 						}*/
 						
-						th.append(/*'<div id="dialog" title="Pagination Alert"></div>' +*/
-								'<input class="jPaginate-link-button-first" id="firstBut" type="button" value="&laquo; First">'+
-							    '<input class="jPaginate-link-button-previous" id="prevBut" type="button" value="&lt; Prev">'+
+						th.html(/*'<div id="dialog" title="Pagination Alert"></div>' +*/
+								'<input class="jPaginate-link-button-first" type="button" id="firstBut" value="&laquo; First">'+
+							    '<input class="jPaginate-link-button-previous" type="button" id="prevBut" value="&lt; Prev">'+
 							    '<strong>Page: </strong>'+'<select class="jPaginate-link-select">'+linksHTML+'</select>' +
-							    '<input class="jPaginate-link-button-next" id="nextBut" type="button" value="Next &gt;">'+
-							    '<input class="jPaginate-link-button-last" id="lastBut" type="button" value="Last &raquo;">'+
+							    '<input class="jPaginate-link-button-next" type="button" id="nextBut" value="Next &gt;">'+
+							    '<input class="jPaginate-link-button-last" type="button" id="lastBut" value="Last &raquo;">'+
 							    ' <strong>Show:</strong> '+
 							    '<select id="pageSize">'+
 							    '<option selected="selected" value="disabled">--Disabled--</option>'+
@@ -178,19 +157,19 @@
 							    '<option value="20">20</option></select>'+
 							    ' <strong>rows</strong>');
 						
-						$('body').append('<div id="dialog-message" title="Pagination Alert" style="display:none">' +
-								/*'<span class="ui-state-default">' +
+						$('body').append('<div id="message" title="Pagination Alert" class="ui-helper-hidden">' +
+								'<span class="ui-state-default">' +
 								'<span class="ui-icon ui-icon-info" style="float:left; margin:0 7px 0 0;"></span></span>' +
 								'<div style="margin-left: 23px;">' +
-								'<p>End of table reached.</p>' +
-								'</div>' +*/
+								'<p></p>' +
+								'</div>' +
 								'</div>');
 						
 						document.getElementById("pageSize").disabled=true;
 					
 								var select=th.find('.jPaginate-link-select');
 								
-							    select.change(function()
+							    select.change(function(event)
 							    	    {
 							    		var $this=$(this);
 							    		var val=isNaN($this.val())?1:$this.val();
@@ -198,46 +177,29 @@
 							    		$this.find('.jPaginate-link-option').removeClass('jPaginate-link-option-selected');
 										$this.find('.jPaginate-link-option[value='+$this.val()+']').addClass('jPaginate-link-option-selected');
 							    		showPage($this.val());
+							    		/*$('div#message p').replaceWith('<p>Page '+$this.val()+'</p>');
+							    		$('#message').dialog('open');
+							    	    event.preventDefault();*/
 							    	    });
 							    
-							    var firstBut = th.find('#firstBut');//.jPaginate-link-button-first
+							    var firstBut = th.find('.jPaginate-link-button-first');//.jPaginate-link-button-first
 							    
-							    		firstBut.on("click", function(e)
+							    		firstBut.on("click", function(event)
 							    	    {
 							    	        select.val(1).change();
-							    	        
-							    	        //$("#firstBut").on("click", firstBut, function(e){
-												$('div#dialog-message').attr('style', '""');
-												$('div#dialog-message').append('<span class="ui-state-default">' +
-												'<span class="ui-icon ui-icon-info" style="float:left; margin:0 7px 0 0;"></span></span>' +
-												'<div style="margin-left: 23px;">' +
-												'<p>End of table reached.</p>' +
-												'</div>');
-												$("#dialog-message").dialog("open");
-												e.preventDefault();
-											//});
-							    	        
+											$('div#message p').replaceWith('<p>First page of table.</p>');
+											event.preventDefault();
 							    	        //alert("First page of the table.");
-							    	        /*$(this).parent().prepend('<div id="dialogA" title="Pagination Alert">'
-	    	    									+ '<p>End of table reached.</p>'
-	    	    									+ '</div>');*/
-							    	        /*$('div#dialog').prepend('<div id="dialog-message" title="Pagination Alert" class="ui-widget-overlay">'
-							    	        					+ '<p>End of table reached.</p>'
-							    	        					+'</div>');*/
-							    	        //$("input#jPaginate-link-button-first").append("<div id=\"dialog\" title=\"Pagination Alert\"><p>End of table reached.</p></div>").dialog("open");/*.addClass("ui-widget-overlay");*/
-							    	        //$("#dialog-message").dialog("open");
-							    	        
-											//e.preventDefault();
-							    	        //$("input#jPaginate-link-button-first").dialog("open");
-							    	        //$("#dialog").dialog("open");
 							    	    });
 							    		
 							    		var lastBut = th.find('.jPaginate-link-button-last');
 							    		
-							    	    lastBut.on("click", function()
+							    	    lastBut.on("click", function(event)
 							    	    {
 							    	        select.val(nbr_pages).change();
-							    	        alert("Last page of table.");
+							    	        $('div#message p').replaceWith('<p>End of the table.</p>');
+							    	        event.preventDefault();
+							    	        //alert("Last page of table.");
 							    	    });
 
 							    	    var prevBut = th.find('.jPaginate-link-button-previous');
@@ -248,25 +210,28 @@
 							    	    		{
 							    	        select.val(parseInt(select.val(),10)-1).change();
 							    	    		}
-							    	    	else
-							    	    		alert("This is the first page! Can't go back.")
+							    	    	else{
+							    	    		$('div#message p').replaceWith("<p>This is the first page!<br>Can't go back.</p>");
+							    	    		$('#message').dialog("open");
+							    	    		event.preventDefault();
+							    	    	}
+							    	    		//alert("This is the first page! Can't go back.")
 							    	    });
 							    	    
 							    	    var nextBut = th.find('.jPaginate-link-button-next');
 
-							    	    nextBut.on("click", function()
+							    	    nextBut.on("click", function(event)
 							    	    {
 							    	    	if (select.val() < nbr_pages)
 							    	    		{
 							    	    			select.val(parseInt(select.val(),10)+1).change();
 							    	    		}
-							    	    	else
-							    	    		alert("End of table reached!");
-							    	    		/*{
-							    	    		$(this).parent().prepend('<div id="dialogA" title="Pagination Alert">'
-					    	    									+ '<p>End of table reached.</p>'
-					    	    									+ '</div>');
-							    	    		}*/
+							    	    	else{
+							    	    		$('div#message p').replaceWith("<p>End of table reached!</p>");
+							    	    		$('#message').dialog("open");
+							    	    		event.preventDefault();
+							    	    	}
+							    	    		//alert("End of table reached!");
 							    	    });
 							    	    
 							    	    th.find('.pageSize').change(function()
@@ -308,23 +273,3 @@
 		th.html('&nbsp;<b>Display</b> '+'<select class="jPaginate-page-select">'+pageHTML+'</select> rows');*/
 	};
 })(jQuery);
-
-/*$(function(){
-	$("#dialog-message").dialog({
-		autoOpen: false,
-		modal: true,
-		draggable: false,
-		resizable: false,
-		title: "Pagination Alert",
-		//position: ['center'],
-		show: fade,
-		hide: fade,
-		width: 200,
-		buttons: {
-			"OK" : function(){
-					$(this).dialog("close");//Close on click
-				}
-			}
-		});
-	
-});*/

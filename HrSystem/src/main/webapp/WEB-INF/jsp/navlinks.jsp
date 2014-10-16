@@ -8,7 +8,7 @@
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/dashboard.css"/>" />
 	<link rel="stylesheet" href="<c:url value="/resources/css/RowTabs.css"/>"/>
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> -->
+
 	<script>
 	$(document).ready(function() {
 		//Below is the click function which you need AJAX to work properly

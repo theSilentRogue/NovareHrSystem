@@ -322,6 +322,30 @@ option
 	z-index: -1000;
 }
 
+.ui-button
+{
+	font-size: 0.8em !important;
+	padding: 6px 6px 5px 5px !important;
+}
+
+.ui-dialog-titlebar
+{
+	font-size: 18px !important;
+	font: bold !important;
+}
+
+.ui-dialog-content
+{
+	font-size: 15px !important;
+	/* padding: 5px 5px 5px 5px !important; */
+}
+
+.ui-button-text
+{
+	font-size: 12px !important;
+	padding: 5px 5px 4px 4px !important;
+}
+
 /* For dropdowns */
 
 /* .dropdown

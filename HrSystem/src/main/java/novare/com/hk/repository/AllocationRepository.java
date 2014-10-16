@@ -58,5 +58,16 @@ public interface AllocationRepository extends JpaRepository<Allocation, Integer>
 			+ " GROUP BY a.start_date"
 			+ " ORDER BY MONTH(a.start_date)")
 	public List<Allocation> reportMonth(@Param("start_date")Date start_date, @Param("end_date")Date end_date);
+	
+	@Query(value="SELECT p.project_name AS project_name, "
+			+ "alloc.start_date, " 
+			+ "alloc.end_date, "  
+			+ "(alloc.percent/100.0000), " 
+			+ "CONCAT(e.fname, \' \', e.lname) AS employee_name "
+			+ "from Allocation alloc " 
+			+ "INNER JOIN alloc.project as p " 
+			+ "INNER JOIN alloc.employee as e "  
+			+ "GROUP BY MONTH(alloc.start_date)")
+	public List<Object[]> defaultAlloc();
 
 }

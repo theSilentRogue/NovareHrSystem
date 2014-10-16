@@ -65,4 +65,21 @@ public class ProjectServiceImpl implements ProjectService {
 			return projectRepository.findAll();
 		}
 	}
+	
+	@Transactional
+	public List<Object[]> genReport (Date start_date, Date end_date){
+		if(start_date != null && end_date == null){
+			return projectRepository.genReport(start_date);
+			}
+			else if(start_date != null && end_date != null){
+			return projectRepository.genReport(start_date, end_date);
+			}
+			else{
+				return null;
+			}
+		}
+	
+	public List<Object[]> filterAlloc(String project_name){
+				return projectRepository.filterAlloc(project_name);
+			}
 }

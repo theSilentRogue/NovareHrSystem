@@ -7,14 +7,14 @@
 <html>
 <head>
 <title>Home - Resource Management System</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" ></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/dashboard.css"/>" />
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/imageClasses.css"/>" />
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/jPaginate-default.css"/>" />
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" ></script>
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 </head>
 <body>
 <div id="title">Home - Resource Management System</div>

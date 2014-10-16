@@ -16,7 +16,7 @@
 	<div class="centerContent">
 		<h1 style="color: #fff; font-style: italic;">Error!</h1>
 		<h2>Something went wrong... Please go back to the main page.</h2>
-		<br /> <a href="viewEmployeeList">Go Back</a>
+		<br /> <a href="index">Go Back</a>
 	</div>
 
 </body>

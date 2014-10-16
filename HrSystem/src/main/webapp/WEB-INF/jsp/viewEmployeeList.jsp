@@ -15,14 +15,15 @@
 	<!-- <script src="/resources/scripts/jquery-ui.min.js"></script>-->
 	
 <%-- Used for better latency load times --%>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" ></script>
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.min.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js" ></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/redmond/jquery-ui.css" />
+
 <%-- The rest of the scripts go here... --%>
-<link rel="stylesheet"
-	href="<c:url value="/resources/css/jPaginate-default.css"/>" />
 <script src="<c:url value="/resources/scripts/jPaginate.js"/>"></script>
 <script src="<c:url value="/resources/scripts/sorttable.js"/>"></script>
+<link rel="stylesheet"
+	href="<c:url value="/resources/css/jPaginate-default.css"/>" />
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/dashboard.css"/>" />
 <link rel="stylesheet"
@@ -111,17 +112,23 @@
 								alt="Edit" width="85" height="29"
 								src="<c:url value="/resources/images/editBut.png"/>"
 								class="editlink" /></a>
-						<a href="deleteEmployee?id=${employee.id}"
-							onclick="return confirmAction()"><img alt="Delete" width="85"
-								height="29" src="<c:url value="/resources/images/delBut.png"/>"
+						<a href="deleteEmployee?id=${employee.id}" class="delConfirm">
+						<img alt="Delete" width="85" height="29" 
+							src="<c:url value="/resources/images/delBut.png"/>"
 								class="dellink" /></a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+		<div id="message-delete" title="Delete Record" class="ui-helper-hidden">
+		<span class="ui-state-default">
+		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span></span>
+			<div style="margin-left: 23px;">
+			<p>Are you sure to delete this item?</p>
+			</div>
+		</div>
 		<!-- center -->
 	<%@include file="footer.jsp"%>
-</body>
 <script>			
 			$(document).ready(function()
 			{
@@ -133,11 +140,67 @@
 					'links':'selectButtons'
 				});
 				
-				function confirmAction()
+				$("#message").dialog({
+					autoOpen: false,
+					//Remove the 'X' button in the top right corner and set timeout
+					open: function(event, ui){
+						$(".ui-dialog-titlebar-close").hide();
+						setTimeout("$('#message').dialog('close')",1500);
+					},
+					modal: true,
+					draggable: false,
+					resizable: false,
+					show: "fade",
+					hide: "fade",
+					buttons: {
+				        OK: function() {
+				          $( this ).dialog( "close" );
+				        }
+				      }
+					});
+				
+				$("#firstBut").click(function(event){
+					$("#message").dialog("open");
+					event.preventDefault();
+				});
+				
+				$("#lastBut").click(function(event){
+					$("#message").dialog("open");
+					event.preventDefault();
+				});
+				
+				$(".delConfirm").click(function(event){
+					var $targetItem = $(this).attr('href');
+					$("#message-delete").dialog({
+						autoOpen: false,
+						//Remove the 'X' button in the top right corner
+						open: function(event, ui){$(".ui-dialog-titlebar-close").hide();},
+						modal: true,
+						draggable: false,
+						resizable: false,
+						show: "fade",
+						hide: "fade",
+						width: 320,
+						buttons: {
+					        Delete: function() {
+					        	window.location.href = $targetItem;
+					          $( this ).dialog( "close" );
+					        },
+							Cancel: function(){
+								$( this ).dialog( "close" );
+							}
+					      }
+						});
+					$("#message-delete").dialog("open");
+					event.preventDefault();
+				});
+			})(jQuery);
+				/* function confirmAction()
 				{
 					var act = confirm("Do you want to delete this item?");
 					return act;
-				}
-			});
-		</script>
+				} */
+			
+</script>
+</body>
 </html>

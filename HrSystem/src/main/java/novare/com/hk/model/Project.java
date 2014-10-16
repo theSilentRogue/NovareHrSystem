@@ -1,5 +1,6 @@
 package novare.com.hk.model;
 
+//import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-//import java.text.SimpleDateFormat;
 @Entity
 @Table(name = "projects")
 public class Project {
@@ -35,6 +35,10 @@ public class Project {
 
 	private String client;
 	private String project_name;
+	private String employee_name;
+	
+	@Transient
+	private double percent;
 	
 	@Temporal(TemporalType.DATE)
 	private Date start_date;
@@ -43,26 +47,52 @@ public class Project {
 	@Column(nullable = true)
 	private Date end_date;
 	
-	@Transient
 	private long plannedheadcount;
 	
 	@Transient
-	private double totalpercent;
+	private double totalAllocation;
 	
-	@Transient
 	private double dailycost;
 	
+	private String month;
+	
+	private String year;
+	
+	public double getPercent() {
+		return percent;
+	}
+	public void setPercent(double percent) {
+		this.percent = percent;
+	}
+	public String getEmployee_name() {
+		return employee_name;
+	}
+	public void setEmployee_name(String employee_name) {
+		this.employee_name = employee_name;
+	}
+	public String getMonth() {
+		return month;
+	}
+	public void setMonth(String month) {
+		this.month = month;
+	}
+	public String getYear() {
+		return year;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
 	public long getPlannedheadcount() {
 		return plannedheadcount;
 	}
 	public void setPlannedheadcount(long plannedheadcount) {
 		this.plannedheadcount = plannedheadcount;
 	}
-	public double getTotalpercent() {
-		return totalpercent;
+	public double getTotalAllocation() {
+		return totalAllocation;
 	}
-	public void setTotalpercent(double totalpercent) {
-		this.totalpercent = totalpercent;
+	public void setTotalAllocation(double totalallocation) {
+		this.totalAllocation = totalallocation;
 	}
 	public double getDailycost() {
 		return dailycost;
@@ -96,16 +126,6 @@ public class Project {
 	public void setDate_end(Date date_end) {
 		this.date_end = date_end;
 	}
-	
-	/*@Transient
-	private Date date_query;
-	
-	public Date getDate_query() {
-		return date_query;
-	}
-	public void setDate_query(Date date_query) {
-		this.date_query = date_query;
-	}*/
 	
 	public String getSearchquery() {
 		return searchquery;

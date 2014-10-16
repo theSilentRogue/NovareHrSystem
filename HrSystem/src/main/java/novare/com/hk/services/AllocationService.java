@@ -26,4 +26,6 @@ public interface AllocationService {
 	public List<Allocation> reportMonth(Date start_date, Date end_date);
 	
 	public List<Allocation> dateSearch(Date start_date, Date end_date);
+	
+	public List<Object[]> defaultAlloc();
 }

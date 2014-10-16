@@ -23,7 +23,7 @@
          	
     <bean	id="pdfReportMonth" 
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
-         	p:url="classpath:allocationMonth.jrxml"
+         	p:url="classpath:allocMonthly.jrxml"
          	p:reportDataKey="dataSource"/>
 
 </beans>

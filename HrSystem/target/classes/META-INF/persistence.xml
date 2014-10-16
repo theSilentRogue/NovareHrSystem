@@ -1,3 +1,7 @@
+<!-- For JPA-Hibernate Repositories, wasn't used too much. 
+	Needs further analysis and proper configuration on the project.(novare.com.hk.config.ApplicationConfig - commented out all functions and classes)
+	"punit" is not used anywhere on the project
+-->
 <persistence xmlns="http://java.sun.com/xml/ns/persitence"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence_2_0.xsd"

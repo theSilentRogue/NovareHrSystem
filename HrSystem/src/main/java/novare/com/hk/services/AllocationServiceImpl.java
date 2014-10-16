@@ -65,4 +65,8 @@ public class AllocationServiceImpl implements AllocationService{
 	public List<Allocation> dateSearch(Date start_date, Date end_date){
 		return allocationRepository.dateSearch(start_date, end_date);
 	}
+	
+	public List<Object[]> defaultAlloc() {
+		return allocationRepository.defaultAlloc();
+	}
 }

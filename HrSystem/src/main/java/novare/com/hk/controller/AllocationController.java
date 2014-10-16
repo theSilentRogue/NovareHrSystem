@@ -1,7 +1,11 @@
 package novare.com.hk.controller;
 
 //import java.util.ArrayList;
+//import java.math.BigDecimal;
 import java.text.DateFormat;
+//import java.text.DecimalFormat;
+//import java.text.DecimalFormatSymbols;
+//import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,10 +52,14 @@ public class AllocationController {
 	@Autowired
 	ProjectService projectService;
 	
+	List<Project> plist;
+	
 	List<Project> projectList;
 	List<Allocation> allocationList;
+	boolean isFiltered = false;
 	
-/*	@Autowired
+/*	Used for Spring form Validator test.
+ * @Autowired
 	@Qualifier("allocMonthValidator")
 	private Validator validator;*/
 	
@@ -104,6 +112,7 @@ public class AllocationController {
 		 * setting up employee name and project name for the table JSP View of
 		 * allocations
 		 ***/
+		plist = projectService.getProjectList();
 		projectList = projectService.getProjectList();
 		allocationList = allocationService.getAllocationList();
 		
@@ -112,42 +121,6 @@ public class AllocationController {
 		map.put("allocationList", arrangeNames(allocationList) );
 		
 		return new ModelAndView("viewAllocationList", "map", map);
-//		List<Allocation> allocationList = allocationService.getAllocationList();
-		/*if(allocationList != null){
-			for (Allocation a : allocationList){
-				a.setEmployee_name(a.getEmployee().getFname() + " "
-						+ a.getEmployee().getLname());
-				a.setProject_name(a.getProject().getProject_name());
-			}
-		}*/
-		/********************************************************************/
-		
-		/*****  for project names under filter dropdown  *****/
-		/*List<Project> projectList = projectService.getProjectList();
-		List<String> proj_names = new ArrayList<String>();
-		List<String> names = new ArrayList<String>();
-		
-		for (Project p : projectList)
-		{
-			proj_names.add(p.getProject_name());
-		}
-		
-		Set<String> se = new HashSet<String>(proj_names);
-		proj_names.clear();
-		
-		proj_names = new ArrayList<String>(se);
-		for (Object obj : proj_names)
-		{
-			names.add(obj.toString());
-		}
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		Collections.sort(names);
-		*//******************************************************//*
-		map.put("names", names);
-		map.put("allocationList", allocationList);
-		
-		return new ModelAndView("viewAllocationList", "map", map);*/
 	}
 	
 	@RequestMapping("/editAllocation")
@@ -158,25 +131,6 @@ public class AllocationController {
 		allocation.setEmployee_name(allocation.getEmployee().getFname() + " " + allocation.getEmployee().getLname());
 		allocation.setProject_name(allocation.getProject().getProject_name());
 		
-		/**			Remove duplicate names from projects list		**/
-		/*List<Project> projectListView = projectService.getProjectList();
-		List<String> proj_names = new ArrayList<String>();
-		List<String> names = new ArrayList<String>();
-		
-		for (Project p : projectListView)
-		{
-			proj_names.add(p.getProject_name());
-		}
-		
-		Set<String> uniqueNames = new HashSet<String>(proj_names);
-		proj_names.clear();
-		
-		proj_names = new ArrayList<String>(uniqueNames);
-
-		for (Object obj : proj_names)
-		{
-			names.add(obj.toString());
-		}*/
 		/************************************************************/
 		
 		Set<Map.Entry<String, Integer>> projects;
@@ -247,35 +201,34 @@ public class AllocationController {
 	
 	@RequestMapping("/filterAlloc")
 	public ModelAndView filterAllocationList(@RequestParam String project_name, @ModelAttribute Project project, @ModelAttribute Allocation allocation){
-		/*List<Allocation> allocationList = allocationService.filterAllocation(project_name);
-		if(allocationList != null){
-			for(Allocation a : allocationList) {
-				a.setEmployee_name(a.getEmployee().getFname() + " "
-						+ a.getEmployee().getLname());
-				a.setProject_name(a.getProject().getProject_name());
-			}
-		}
+		projectList.clear();
+		isFiltered = true;
 		
-		List<Project> allocationListView = projectService.getProjectList();
-		List<String> proj_names = new ArrayList<String>();
-		List<String> names = new ArrayList<String>();
-		
-		for (Project p : allocationListView){
-			proj_names.add(p.getProject_name());
-		}
-		
-		Set<String> uniqueNames = new HashSet<String>(proj_names);
-		proj_names.clear();
-		
-		proj_names = new ArrayList<String>(uniqueNames);
-		for (Object obj : proj_names){
-			names.add(obj.toString());
-		}*/
-		
-		projectList = projectService.filterProject(project_name);
+		List<Object[]> rows = projectService.filterAlloc(project_name);
+				if(rows != null){
+					for (Object[] row: rows) {
+					    System.out.println(" ------------------- ");
+					    System.out.println("project_name: " + row[0]);
+					    System.out.println("month: " + row[1]);
+					    System.out.println("year: " + row[2]);
+					    System.out.println("headcount: " + row[3]);
+					    System.out.println("totalAllocation: " + row[4]);
+					    System.out.println("dailyCost: " + row[5]);
+					   
+					    Project p = new Project();
+					    p.setProject_name(row[0].toString());
+					    p.setMonth(row[1].toString());
+					    p.setYear(row[2].toString());
+					    p.setPlannedheadcount(Long.parseLong(row[3].toString()));
+					    p.setTotalAllocation(Double.parseDouble(row[4].toString()));
+					    p.setDailycost(Double.parseDouble(row[5].toString()));
+					    projectList.add(p);
+					    
+					}
+				}
+				
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		/*Collections.sort(names);*/
 		
 		map.put("names", arrangeDropdownProj());
 		map.put("allocationList", arrangeNames(allocationService.filterAllocation(project_name) ));
@@ -285,33 +238,8 @@ public class AllocationController {
 	
 	@RequestMapping("/searchAlloc")
 	public ModelAndView searchAllocationList(@RequestParam String searchquery, @ModelAttribute Project project, @ModelAttribute Allocation allocation){
-		/*List<Allocation> allocationList = allocationService.searchAllocation(searchquery);
-		
-		if(allocationList != null){
-			for(Allocation a : allocationList){
-				a.setEmployee_name(a.getEmployee().getFname() + " "
-						+ a.getEmployee().getLname());
-				a.setProject_name(a.getProject().getProject_name());
-			}
-		}
-		List<Project> allocationListView = projectService.getProjectList();
-		List<String> proj_names = new ArrayList<String>();
-		List<String> names = new ArrayList<String>();
-		
-		for (Project p : allocationListView){
-			proj_names.add(p.getProject_name());
-		}
-		
-		Set<String> uniqueNames = new HashSet<String>(proj_names);
-		proj_names.clear();
-		
-		proj_names = new ArrayList<String>(uniqueNames);
-		for (Object obj : proj_names){
-			names.add(obj.toString());
-		}*/
 		allocationList = allocationService.searchAllocation(searchquery);
 		Map<String, Object> map = new HashMap<String, Object>();
-		/*Collections.sort(names);*/
 		
 		map.put("names", arrangeDropdownProj());
 		map.put("allocationList", arrangeNames(allocationList) );
@@ -320,22 +248,64 @@ public class AllocationController {
 	}
 	
 	@RequestMapping(value = "/reportPDFAlloc", method = RequestMethod.GET)
-	public ModelAndView jasperDownloadPdf(ModelAndView mv){
-		System.out.println("------------------Downloading PDF------------------");
+	public ModelAndView jasperDownloadPdf(@RequestParam Date start_date, @RequestParam Date end_date, ModelAndView mv){
+		System.out.println("------------------Downloading Report PDF------------------");
 		
+		System.out.println("1st Condition");
+		if(start_date != null || end_date != null){
+					List<Object[]> rows = projectService.genReport(start_date, end_date);
+					if(rows != null && !isFiltered){
+						projectList.clear();
+						for (Object[] row: rows) {
+						    System.out.println(" ------------------- ");
+						    System.out.println("project_name: " + row[0]);
+						    System.out.println("month: " + row[1]);
+						    System.out.println("year: " + row[2]);
+						    System.out.println("plannedheadcount: " + row[3]);
+						    System.out.println("totalallocation: " + row[4]);
+						    System.out.println("dailycost: " + row[5]);
+						    
+						    Project p = new Project();
+						    p.setProject_name(row[0].toString());
+						    p.setMonth(row[1].toString());
+						    p.setYear(row[2].toString());
+						    p.setPlannedheadcount(Long.parseLong(row[3].toString()));
+						    p.setTotalAllocation(Double.parseDouble(row[4].toString()));
+						    p.setDailycost(Double.parseDouble(row[5].toString()));
+						    projectList.add(p);
+						    
+						}
+					}
+			}
+		
+		//projectList = projectService.genReport(start_date, end_date);
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-//		allocationList = allocationService.getAllocationList();
 		
-		JRDataSource jrDataSource = new JRBeanCollectionDataSource(allocationList,false);
+		/*JRDataSource jrDataSource = new JRBeanCollectionDataSource(allocationList,false);
 		
 		parameterMap.put("dataSource", jrDataSource);
 		
-		mv = new ModelAndView("pdfReportAlloc", parameterMap);
+		mv = new ModelAndView("pdfReportAlloc", parameterMap);*/
+		
+		if(!isFiltered && (start_date == null && end_date == null)){
+							System.out.println("No parameters - Default allocation search...");
+			JRDataSource jrDataSource = new JRBeanCollectionDataSource(allocationList, false);
+			parameterMap.put("dataSource", jrDataSource);
+			mv = new ModelAndView("pdfReportAlloc", parameterMap);
+			}
+			else{
+				System.out.println("generate report");
+			JRDataSource jrDataSource = new JRBeanCollectionDataSource(projectList, false);
+			parameterMap.put("dataSource", jrDataSource);
+			mv = new ModelAndView("pdfReportMonth", parameterMap);
+			}
+		
+			isFiltered = false;
 		
 		return mv;
 	}
 	
-	@RequestMapping(value = "/reportMonthPDF", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/reportMonthPDF", method = RequestMethod.GET)
 	public ModelAndView jasperMonthReportPDF(ModelAndView mv, @RequestParam Date start_date, @RequestParam Date end_date){
 			
 		System.out.println("------------------Downloading Monthly PDF------------------");
@@ -355,7 +325,7 @@ Map<String, Object> parameterMap = new HashMap<String, Object>();
 					if((a.getStart_date().after(start_date) || a.getStart_date().equals(start_date)) && (a.getStart_date().before(end_date) || a.getStart_date().equals(end_date))){
 						p.setPlannedheadcount(p.getPlannedheadcount()+1);
 						double percentage = (double)a.getPercent()/100;
-						p.setTotalpercent(p.getTotalpercent()+percentage);
+						p.setTotalAllocation(p.getTotalAllocation()+percentage);
 						p.setDailycost(p.getDailycost()+a.getEmployee().getCost()*percentage);
 						System.out.println(a.getEmployee().getFname());
 					}//End inner if
@@ -364,14 +334,13 @@ Map<String, Object> parameterMap = new HashMap<String, Object>();
 					if((a.getStart_date().after(start_date) || a.getStart_date().equals(start_date))){
 						p.setPlannedheadcount(p.getPlannedheadcount()+1);
 					double percentage = (double)a.getPercent()/100;
-					p.setTotalpercent(p.getTotalpercent()+percentage);
+					p.setTotalAllocation(p.getTotalAllocation()+percentage);
 					p.setDailycost(p.getDailycost()+a.getEmployee().getCost()*percentage);
 					System.out.println(a.getEmployee().getFname());
 					}
 				}// End inner for
 			}//End outer for
 		}
-		/*List<Allocation> allocationList = allocationService.getAllocationList();*/
 		
 		JRDataSource jrDataSource = new JRBeanCollectionDataSource(projectList,false);
 		parameterMap.put("dataSource", jrDataSource);
@@ -379,56 +348,50 @@ Map<String, Object> parameterMap = new HashMap<String, Object>();
 		mv = new ModelAndView("pdfReportMonth", parameterMap);
 		
 		return mv;
-	}
+	}*/
 	
 	@RequestMapping("/datefilterAlloc")
-	public ModelAndView searchDateList(@RequestParam Date start_date, Date end_date, @ModelAttribute Project project){
+	public ModelAndView searchDateList(@RequestParam Date start_date, Date end_date){
 		
-		List<Project> projectList = projectService.getReport(start_date, end_date);
-//		List<Project> projectList = projectService.getProjectList();
-		List<Allocation> allocList = allocationService.reportMonth(start_date, end_date);
-		
-		/*if(allocationList != null){
-			for(Allocation a : allocationList){
-				a.setEmployee_name(a.getEmployee().getFname() + " "
-						+ a.getEmployee().getLname());
-				a.setProject_name(a.getProject().getProject_name());
+		plist.clear();
+		List<Object[]> rows = projectService.genReport(start_date, end_date);
+		if(rows != null){
+			for (Object[] row: rows) {
+			    System.out.println(" ------------------- ");
+			    System.out.println("project_name: " + row[0]);
+			    System.out.println("month: " + row[1]);
+			    System.out.println("year: " + row[2]);
+			    System.out.println("headcount: " + row[3]);
+			    System.out.println("totalAllocation: " + row[4]);
+			    System.out.println("dailyCost: " + row[5]);
+			   
+			    Project p = new Project();
+			    p.setProject_name(row[0].toString());
+			    p.setMonth(row[1].toString());
+			    p.setYear(row[2].toString());
+			    p.setPlannedheadcount(Long.parseLong(row[3].toString()));
+			    p.setTotalAllocation(Double.parseDouble(row[4].toString()));
+			    p.setDailycost(Double.parseDouble(row[5].toString()));
+			    plist.add(p);
+			    
 			}
 		}
-		List<Project> allocationListView = projectService.getProjectList();
-		List<String> proj_names = new ArrayList<String>();
-		List<String> names = new ArrayList<String>();
+		//List<Object[]> projectList = projectService.genReport(start_date, end_date);
+//		List<Allocation> allocList = allocationService.reportMonth(start_date, end_date);
 		
-		for (Project p : allocationListView){
-			proj_names.add(p.getProject_name());
-		}*/
-		
-		for (Project p: projectList){
-			for (Allocation a: allocList){ /*allocationService.reportMonth(start_date, end_date)*/
+		/*for (Project p: projectList){
+			for (Allocation a: allocList){ allocationService.reportMonth(start_date, end_date)
 				if(p.getProject_name() == a.getProject().getProject_name()){
 					p.setPlannedheadcount(p.getPlannedheadcount()+1);
 					double percentage = (double) Math.round(a.getPercent())/100;
-						p.setTotalpercent(p.getTotalpercent()+percentage);
+						p.setTotalAllocation(p.getTotalAllocation()+percentage);
 						p.setDailycost(p.getDailycost()+a.getEmployee().getCost()*percentage);
 				}
 			}
-		}
-		
-		/*Set<String> uniqueNames = new HashSet<String>(proj_names);
-		proj_names.clear();
-		
-		proj_names = new ArrayList<String>(uniqueNames);
-		for (Object obj : proj_names){
-			names.add(obj.toString());
 		}*/
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		/*Collections.sort(names);
-		
-		map.put("names", names);*/
-//		map.put("projectList", allocList);
-		map.put("projectList", projectList);
-		/*map.put("allocationList", allocationList);*/
+		map.put("projectList", plist);
 		
 		return new ModelAndView("viewProjectDateQuery", "map", map);
 	}
@@ -438,7 +401,8 @@ Map<String, Object> parameterMap = new HashMap<String, Object>();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		dateFormat.setLenient(false);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-		/*binder.setValidator(validator);*/
+		/* Testing Spring form Validator(Has errors)
+		 * binder.setValidator(validator);*/
 	}
 	
 	private List<Allocation> arrangeNames(List<Allocation> allocationList){
@@ -470,4 +434,27 @@ Map<String, Object> parameterMap = new HashMap<String, Object>();
 		
 		return names;
 	}
+	
+	/* Used for parsing BigDecimal values to desired format in decimal.
+	 * private BigDecimal parseBigDecimal(String stringToBeParsed){
+			    // Parse BigDecimal
+			    DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+			    symbols.setGroupingSeparator(',');
+			    symbols.setDecimalSeparator('.');
+			    String pattern = "#,##0.0#";
+			    DecimalFormat decimalFormat = new DecimalFormat(pattern, symbols);
+			    decimalFormat.setParseBigDecimal(true);
+		
+			    BigDecimal parsedTotalAlloc = null;
+				try 
+				{
+					parsedTotalAlloc = (BigDecimal) decimalFormat.parse(stringToBeParsed);
+				} catch (ParseException e) 
+				{
+					e.printStackTrace();
+				}
+			    // end parse
+				System.out.println(parsedTotalAlloc);
+				return parsedTotalAlloc;
+			}*/
 }
